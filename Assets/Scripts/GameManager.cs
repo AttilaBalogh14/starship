@@ -6,6 +6,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    // Singleton instance
+    public static GameManager Instance;
+
     //Reference to our game objects
     public GameObject playButton;
     public GameObject playerShip;
@@ -15,6 +18,11 @@ public class GameManager : MonoBehaviour
     public GameObject scoreUITextGO; //reference to the score text UI game object
     public GameObject TimeCounterGO; //reference to the time counter game object
     public GameObject GameTitleGO; // reference to the GameTitleGO
+    public GameObject PlusHPSpawnGO; // This is a reference to the GameObject that holds the PlusHPSpawn script
+    public GameObject ShieldSpawnGO; // This is a reference to the GameObject that holds the PlusHPSpawn script
+    public GameObject ShieldOnPlayer;
+    private float shieldduration = 15f;
+    private float shieldtimer;
 
     public enum GameManagerState
     {
@@ -25,6 +33,19 @@ public class GameManager : MonoBehaviour
 
     GameManagerState GMState;
 
+    // Singleton initialization
+    void Awake()
+    {
+        // Ensure there's only one instance of GameManager
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);  // Destroy duplicate GameManager if one already exists
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -48,7 +69,7 @@ public class GameManager : MonoBehaviour
 
             //set play button visible (active)
             playButton.SetActive(true);
-            
+
             break;
 
         case GameManagerState.Gameplay:
@@ -74,6 +95,34 @@ public class GameManager : MonoBehaviour
             //start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
 
+            // Initialize PlusHPSpawn script
+            if (PlusHPSpawnGO != null)
+            {
+                // Ensure PlusHPSpawn component is attached and set the reference
+                PlusHPSpawn plusHPSpawnScript = PlusHPSpawnGO.GetComponent<PlusHPSpawn>();
+                if (plusHPSpawnScript != null)
+                {
+                    // Start the timer
+                    plusHPSpawnScript.StartTimer();
+                }
+            }
+
+            // Initialize ShieldSpwan script
+            if (PlusHPSpawnGO != null)
+            {
+                // Ensure ShieldSpawn component is attached and set the reference
+                ShieldSpawn ShieldSpawnScript = ShieldSpawnGO.GetComponent<ShieldSpawn>();
+                if (ShieldSpawnScript != null)
+                {
+                    // Start the timer
+                    ShieldSpawnScript.StartTimer();
+                }
+            }
+            
+            //hide shield 
+            ShieldOnPlayer.SetActive(false);
+            
+
             break;
         
         case GameManagerState.GameOver:
@@ -87,6 +136,29 @@ public class GameManager : MonoBehaviour
             asteroidSpawner.GetComponent<AsteroidSpawner>().UnscheduleAsteroidSpawner();
             //display game over
             GameOverGO.SetActive(true);
+            //stop timer
+            if (PlusHPSpawnGO != null)
+            {
+                // Ensure PlusHPSpawn component is attached and set the reference
+                PlusHPSpawn plusHPSpawnScript = PlusHPSpawnGO.GetComponent<PlusHPSpawn>();
+                if (plusHPSpawnScript != null)
+                {
+                    // Start the timer
+                    plusHPSpawnScript.StopTimer();
+                }
+            }
+
+            if (PlusHPSpawnGO != null)
+            {
+                // Ensure ShieldSpawn component is attached and set the reference
+                ShieldSpawn ShieldSpawnScript = ShieldSpawnGO.GetComponent<ShieldSpawn>();
+                if (ShieldSpawnScript != null)
+                {
+                    // Start the timer
+                    ShieldSpawnScript.StopTimer();
+                }
+            }
+
             //change game manager state to Opening state after 8 seconds
             Invoke("ChangeToOpeningState", 8f);
 
@@ -116,5 +188,30 @@ public class GameManager : MonoBehaviour
     public void ChangeToOpeningState()
     {
         SetGameManagerState(GameManagerState.Opening);
+    }
+    
+    // Call this method when the player picks up the shield
+    public void ActivateShield()
+    {
+        if (ShieldOnPlayer != null)
+        {
+            ShieldOnPlayer.SetActive(true);  // Activate the shield
+            shieldtimer = shieldduration;   // Reset the shield timer
+        }
+    }
+
+    void Update()
+    {
+        // If the shield is active, decrease the shield timer
+        if (ShieldOnPlayer.activeSelf)
+        {
+            shieldtimer -= Time.deltaTime;
+
+            // When the timer runs out, deactivate the shield
+            if (shieldtimer <= 0f)
+            {
+                ShieldOnPlayer.SetActive(false);  // Deactivate the shield
+            }
+        }
     }
 }

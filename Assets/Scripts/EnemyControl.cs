@@ -47,7 +47,7 @@ public class EnemyControl : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         // Detect collision of the enemy with the player's ship or bullets
-        if ((col.tag == "PlayerShipTag") || (col.tag == "PlayerBulletTag01") || (col.tag == "PlayerBulletTag02"))
+        if ((col.tag == "PlayerShipTag") || (col.tag == "PlayerBulletTag01") || (col.tag == "PlayerBulletTag02") || (col.tag == "ShieldOnPlayerTag"))
         {
             // Only add points if the enemy hasn't been hit yet
             if (!hasHit)

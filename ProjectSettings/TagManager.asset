@@ -11,11 +11,15 @@ TagManager:
   - AsteroidTag
   - PlayerBulletTag01
   - PlayerBulletTag02
+  - PlusHPTag
+  - PlusHP
+  - ShiledTag
+  - ShieldOnPlayerTag
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Planet
   - Water
   - UI
   - 

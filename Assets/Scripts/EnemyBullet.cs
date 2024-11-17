@@ -61,7 +61,7 @@ public class EnemyBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col){
         //detect collision of an enemys bullet with the players ship
-        if (col.tag == "PlayerShipTag") {
+        if ((col.tag == "PlayerShipTag") || (col.tag == "ShieldOnPlayerTag")) {
             //destroy this enemys bullet
             Destroy(gameObject);
         }

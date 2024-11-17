@@ -102,7 +102,7 @@ public class AsteroidControl : MonoBehaviour
 
     void OnTriggerEnter2D (Collider2D col){
         //detect collision of the player ship with an asteroid
-        if (col.tag == "PlayerShipTag") {
+        if ((col.tag == "PlayerShipTag") || (col.tag == "ShieldOnPlayerTag")) {
             Destroy(gameObject);
         }
     }

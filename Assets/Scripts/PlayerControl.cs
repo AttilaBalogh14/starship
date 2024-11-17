@@ -20,7 +20,8 @@ public class PlayerControl : MonoBehaviour
     int Lives; //Current player lives
 
     public float speed;
-
+    private PlusHPSpawn plusHPSpawnScript; // A PlusHPSpawn script referenciája
+    public GameObject ShieldOnPlayer; // Reference to the shield object
     public void Init()
     {
         Lives = MaxLives;
@@ -35,10 +36,19 @@ public class PlayerControl : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    // Method to increase player's lives
+    public void IncreaseLives(int amount)
+    {
+        Lives += amount;
+        // Update the lives UI
+        LivesUIText.text = Lives.ToString();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Initialize the PlusHPSpawn script from the GameManager
+        plusHPSpawnScript = GameManagerGO.GetComponent<GameManager>().PlusHPSpawnGO.GetComponent<PlusHPSpawn>();
     }
 
     // Update is called once per frame
@@ -102,25 +112,42 @@ public class PlayerControl : MonoBehaviour
         transform.position = pos;
     }
 
-    void OnTriggerEnter2D(Collider2D col){
-        //detect collision of the player ship with an enemy ship, or with an enemy bullet, or with an asteroid
-        if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag")){
-            PlayExplosion();
-
-            Lives--; //substract one live
-            LivesUIText.text = Lives.ToString(); // update lives ui text
-
-            if (Lives == 0) //if our player is dead
-            {
-                //change game manager state to game over state
-                GameManagerGO.GetComponent<GameManager>().SetGameManagerState(GameManager.GameManagerState.GameOver);
-
-                //Destroy(gameObject); // Destroy the players ship
-                //hide the players ship
-                gameObject.SetActive(false);
-            }
+   void OnTriggerEnter2D(Collider2D col)
+{
+    // Ha a pajzs aktív, akkor eltávolítjuk az ellenséges objektumot, de nem vonunk le életet
+    if (ShieldOnPlayer.activeSelf)
+    {
+        if (col.tag == "EnemyBulletTag" || col.tag == "EnemyShipTag" || col.tag == "AsteroidTag")
+        {
+            Destroy(col.gameObject); // Töröljük az ütköző objektumot (pl. ellenséges golyó, aszteroida)
+            return; // Ne folytassuk tovább a kódot, ha a pajzs aktív, mivel nem kell életet vonni
         }
     }
+
+    // Ha a pajzs nem aktív, akkor le kell vonni életet, ha az ütközés ellenséggel vagy golyóval történt
+    if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag"))
+    {
+        PlayExplosion(); // Játékos robbanása
+
+        Lives--; // Egy élet levonása
+        LivesUIText.text = Lives.ToString(); // Életek UI frissítése
+
+        if (Lives == 0) // Ha a játékos meghalt
+        {
+            // Változtassuk meg a játék állapotát game over-re
+            GameManagerGO.GetComponent<GameManager>().SetGameManagerState(GameManager.GameManagerState.GameOver);
+
+            // A játékos hajóját eltüntetjük
+            gameObject.SetActive(false);
+        }
+
+        // Ha 1 élet maradt, értesítjük a PlusHPSpawn scriptet
+        if (Lives == 1 && plusHPSpawnScript != null)
+        {
+            plusHPSpawnScript.CheckAndSpawnPlusHP(Lives);
+        }
+    }
+}
 
     //function to intantiate an explosion
     void PlayExplosion(){
