@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     //Reference to our game objects
     public GameObject playButton;
     public GameObject playerShip;
@@ -16,6 +15,10 @@ public class GameManager : MonoBehaviour
     public GameObject TimeCounterGO; //reference to the time counter game object
     public GameObject GameTitleGO; // reference to the GameTitleGO
 
+    // Reference to AudioSources
+    public AudioSource backgroundMusic;
+    public AudioSource deathMusic;
+
     public enum GameManagerState
     {
         Opening,
@@ -25,12 +28,16 @@ public class GameManager : MonoBehaviour
 
     GameManagerState GMState;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
         GMState = GameManagerState.Opening;
+
+        // Ensure music states are correct at start
+        if (backgroundMusic != null)
+            backgroundMusic.Play();
+        if (deathMusic != null)
+            deathMusic.Stop();
     }
 
     //Function to update the game manager state
@@ -40,54 +47,77 @@ public class GameManager : MonoBehaviour
         {
         case GameManagerState.Opening:
             
-            //Hide game over 
+            // Hide game over 
             GameOverGO.SetActive(false);
 
-            //Display the game title
+            // Display the game title
             GameTitleGO.SetActive(true);
 
-            //set play button visible (active)
+            // Set play button visible (active)
             playButton.SetActive(true);
+
+            // Play background music
+            if (backgroundMusic != null && !backgroundMusic.isPlaying)
+                backgroundMusic.Play();
             
+            if (deathMusic != null && deathMusic.isPlaying)
+                deathMusic.Stop();
+
             break;
 
         case GameManagerState.Gameplay:
-            //reset the score
+            // Reset the score
             scoreUITextGO.GetComponent<GameScore>().Score = 0;
 
-            //hide play button on game play state
+            // Hide play button on game play state
             playButton.SetActive(false);
 
-            //hide the game title
+            // Hide the game title
             GameTitleGO.SetActive(false);
 
-            //set the player visible (active) and init the player lives
+            // Set the player visible (active) and init the player lives
             playerShip.GetComponent<PlayerControl>().Init();
 
-            //start enemy spawner
+            // Start enemy spawner
             enemySpawner.GetComponent<EnemySpawner>().ScheduleEnemySpawner();
 
-            //start asteroid spawner
+            // Start asteroid spawner
             asteroidSpawner.GetComponent<AsteroidSpawner>().ScheduleAsteroidSpawner();
 
-
-            //start the time counter
+            // Start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
+
+            // Play background music if not already playing
+            if (backgroundMusic != null && !backgroundMusic.isPlaying)
+                backgroundMusic.Play();
+            
+            if (deathMusic != null && deathMusic.isPlaying)
+                deathMusic.Stop();
 
             break;
         
         case GameManagerState.GameOver:
 
-            //stop the time counter
+            // Stop the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StopTimeCounter();
 
-            //stop enemy spawner
+            // Stop enemy spawner
             enemySpawner.GetComponent<EnemySpawner>().UnscheduleEnemySpawner();
-            //stop asteroid spawner
+            // Stop asteroid spawner
             asteroidSpawner.GetComponent<AsteroidSpawner>().UnscheduleAsteroidSpawner();
-            //display game over
+
+            // Display game over
             GameOverGO.SetActive(true);
-            //change game manager state to Opening state after 8 seconds
+
+            // Stop background music
+            if (backgroundMusic != null && backgroundMusic.isPlaying)
+                backgroundMusic.Stop();
+
+            // Play death music
+            if (deathMusic != null)
+                deathMusic.Play();
+
+            // Change game manager state to Opening state after 8 seconds
             Invoke("ChangeToOpeningState", 8f);
 
             break;
@@ -98,10 +128,8 @@ public class GameManager : MonoBehaviour
     public void SetGameManagerState(GameManagerState state)
     {
         GMState = state;
-        UpdateGameManagerState ();
-
+        UpdateGameManagerState();
     }
-
 
     //Our play button will call this action
     //when the user clicks the button
@@ -109,12 +137,12 @@ public class GameManager : MonoBehaviour
     {
         GMState = GameManagerState.Gameplay;
         UpdateGameManagerState();
-
     }
 
-    //function to change manager state to opening state
+    //Function to change manager state to opening state
     public void ChangeToOpeningState()
     {
         SetGameManagerState(GameManagerState.Opening);
     }
 }
+
