@@ -33,7 +33,7 @@ public class PowerShootSpawn : MonoBehaviour
         {
             hasSpawned = true; // Beállítjuk, hogy már spawnoltunk
             SpawnPowerShoot(); // Létrehozzuk a PlusHP objektumot
-            nextspawntime = Random.Range(5, 10);
+            nextspawntime = Random.Range(60, 90);
             spawnTimer = 0f;
         }
     }
@@ -63,7 +63,7 @@ public class PowerShootSpawn : MonoBehaviour
      public void StartTimer()
     {
         gameStarted = true; // Beállítjuk, hogy a játék elindult
-        nextspawntime = Random.Range(5f, 10f); // Az első spawn időpontját beállítjuk
+        nextspawntime = Random.Range(60f, 90f); // Az első spawn időpontját beállítjuk
     }
 
     public void StopTimer()

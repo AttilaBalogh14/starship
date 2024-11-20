@@ -30,6 +30,17 @@ public class PlayerControl : MonoBehaviour
     public float speed;
     private PlusHPSpawn plusHPSpawnScript; // A PlusHPSpawn script referenciája
     public GameObject ShieldOnPlayer; // Reference to the shield object
+    private bool isFlashing = false; // Állapot, hogy a hajó villog-e
+    private float flashTimer = 0f; // Időzítő a villogás vezérléséhez
+    public float flashDuration = 5f; // Az idő, amely alatt a hajó "villog"
+    public SpriteRenderer playerSpriteRenderer; // A játékos hajójának SpriteRenderer-e
+    public SpriteRenderer Extra_Part01SpriteRenderer; // A játékos hajójának SpriteRenderer-e
+    public SpriteRenderer Extra_Part02SpriteRenderer; // A játékos hajójának SpriteRenderer-e
+
+    //private int flashCycleCount = 0; // Nyomon követjük, hány ciklus ment végbe
+    private float flashInterval = 0.25f; // Az intervallum, amelyenként váltogatunk a láthatóságot
+    private float flashCooldown = 0f; // A villogás ütemezése, hogy minden 0.5 másodpercben történjen
+    private bool isVisible = true; // Az állapot, hogy a hajó jelenleg látható-e vagy sem
     public void Init()
     {
         Lives = MaxLives;
@@ -73,6 +84,36 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
+        // Ha a hajó villog, kezeljük a villogás logikáját
+    if (isFlashing)
+    {
+        flashTimer -= Time.deltaTime; // Csökkentjük az időt a villogás hosszához
+
+        // Ha a villogás ideje még nem telt el
+        if (flashTimer > 0f)
+        {
+            flashCooldown -= Time.deltaTime; // Csökkentjük a villogás ütemezését
+
+            // Minden 0.5 másodpercben váltsuk a láthatóságot
+            if (flashCooldown <= 0f)
+            {
+                isVisible = !isVisible; // Váltunk a láthatóság állapotán
+                playerSpriteRenderer.enabled = isVisible; // Frissítjük a láthatóságot
+                if(hasPowerShoot){
+                    Extra_Part01SpriteRenderer.enabled = isVisible;
+                    Extra_Part02SpriteRenderer.enabled = isVisible;
+                }
+
+                flashCooldown = flashInterval; // Reseteljük az időzítőt a következő villanásra
+            }
+        }
+        else
+        {
+            // Ha a villogás ideje letelt, fejezzük be
+            isFlashing = false;
+            playerSpriteRenderer.enabled = true; // Biztosítjuk, hogy végleg látható legyen
+        }
+    }
         //fire bullets when the spacebar is pressed
         if(Input.GetKeyDown("space")){
 
@@ -156,7 +197,7 @@ public class PlayerControl : MonoBehaviour
     // Ha a pajzs nem aktív, akkor le kell vonni életet, ha az ütközés ellenséggel vagy golyóval történt
     if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag"))
     {
-        PlayExplosion(); // Játékos robbanása
+        //PlayExplosion(); // Játékos robbanása
 
         Lives--; // Egy élet levonása
         LivesUIText.text = Lives.ToString(); // Életek UI frissítése
@@ -175,6 +216,9 @@ public class PlayerControl : MonoBehaviour
         {
             plusHPSpawnScript.CheckAndSpawnPlusHP(Lives);
         }
+
+        // Indítsuk el a villogást
+        StartFlashing();
     }
 }
 
@@ -205,6 +249,26 @@ public class PlayerControl : MonoBehaviour
 
         extra_part01.SetActive(false);
         extra_part02.SetActive(false);
+    }
+
+    void StartFlashing()
+    {
+        isFlashing = true; // Indítsuk el a villogást
+        flashTimer = flashDuration; // Állítsuk be a villogás időtartamát
+        flashCooldown = 0; // Kezdjük el az első villanást
+        isVisible = true; // A kezdeti állapot, hogy a hajó látható
+        playerSpriteRenderer.enabled = true; // Biztosítjuk, hogy a hajó kezdetben látható
+    }
+
+    public void StopFlashing()
+    {
+        isFlashing = false; // Leállítjuk a villogást
+        playerSpriteRenderer.enabled = true; // A hajó látható lesz
+    }
+
+    public void ResetVisibility()
+    {
+        playerSpriteRenderer.enabled = true; // Biztosítjuk, hogy a hajó látható legyen
     }
 
 }

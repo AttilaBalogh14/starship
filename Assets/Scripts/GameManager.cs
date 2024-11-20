@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
             asteroidSpawner.GetComponent<AsteroidSpawner>().UnscheduleAsteroidSpawner();
             //display game over
             GameOverGO.SetActive(true);
+            playerShip.GetComponent<PlayerControl>().DeactivatePowerShoot();
             //stop timer
             if (PlusHPSpawnGO != null)
             {
@@ -206,6 +207,9 @@ public class GameManager : MonoBehaviour
         GMState = GameManagerState.Gameplay;
         UpdateGameManagerState();
 
+        // Ne hagyjuk, hogy a hajó villogjon, amikor újraindul a játék
+    playerShip.GetComponent<PlayerControl>().StopFlashing();  // Leállítjuk a villogást a PlayerControl scriptben
+    playerShip.GetComponent<PlayerControl>().ResetVisibility();  // Biztosítjuk, hogy a hajó látható legyen
     }
 
     //function to change manager state to opening state

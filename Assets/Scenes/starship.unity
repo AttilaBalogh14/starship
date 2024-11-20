@@ -1398,6 +1398,10 @@ MonoBehaviour:
   powerShootActiveTime: 15
   speed: 5
   ShieldOnPlayer: {fileID: 554191233}
+  flashDuration: 3
+  playerSpriteRenderer: {fileID: 1119788982}
+  Extra_Part01SpriteRenderer: {fileID: 1800288818}
+  Extra_Part02SpriteRenderer: {fileID: 1250295636}
 --- !u!50 &1119788985
 Rigidbody2D:
   serializedVersion: 4
