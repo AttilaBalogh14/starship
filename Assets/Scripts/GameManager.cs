@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     public GameObject TimeCounterGO; //reference to the time counter game object
     public GameObject GameTitleGO; // reference to the GameTitleGO
     public GameObject PlusHPSpawnGO; // This is a reference to the GameObject that holds the PlusHPSpawn script
-    public GameObject ShieldSpawnGO; // This is a reference to the GameObject that holds the PlusHPSpawn script
+    public GameObject ShieldSpawnGO; // This is a reference to the GameObject that holds the ShieldSpawn script
+    public GameObject PowerShootSpawnGO; // This is a reference to the Gameobject that holfs the PowerShootSpawn script
     public GameObject ShieldOnPlayer;
     private float shieldduration = 15f;
     private float shieldtimer;
@@ -108,7 +109,7 @@ public class GameManager : MonoBehaviour
             }
 
             // Initialize ShieldSpwan script
-            if (PlusHPSpawnGO != null)
+            if (ShieldSpawnGO != null)
             {
                 // Ensure ShieldSpawn component is attached and set the reference
                 ShieldSpawn ShieldSpawnScript = ShieldSpawnGO.GetComponent<ShieldSpawn>();
@@ -116,6 +117,18 @@ public class GameManager : MonoBehaviour
                 {
                     // Start the timer
                     ShieldSpawnScript.StartTimer();
+                }
+            }
+
+            // Initialize PowerShootSpawn script
+            if (PowerShootSpawnGO != null)
+            {
+                // Ensure PowerShootSpawn component is attached and set the reference
+                PowerShootSpawn PowerShootSpawnScript = PowerShootSpawnGO.GetComponent<PowerShootSpawn>();
+                if (PowerShootSpawnScript != null)
+                {
+                    // Start the timer
+                    PowerShootSpawnScript.StartTimer();
                 }
             }
             
@@ -148,7 +161,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (PlusHPSpawnGO != null)
+            if (ShieldSpawnGO != null)
             {
                 // Ensure ShieldSpawn component is attached and set the reference
                 ShieldSpawn ShieldSpawnScript = ShieldSpawnGO.GetComponent<ShieldSpawn>();
@@ -156,6 +169,17 @@ public class GameManager : MonoBehaviour
                 {
                     // Start the timer
                     ShieldSpawnScript.StopTimer();
+                }
+            }
+
+            if (PowerShootSpawnGO != null)
+            {
+                // Ensure PowerShootSpawn component is attached and set the reference
+                PowerShootSpawn PowerShootSpawnScript = PowerShootSpawnGO.GetComponent<PowerShootSpawn>();
+                if (PowerShootSpawnScript != null)
+                {
+                    // Start the timer
+                    PowerShootSpawnScript.StopTimer();
                 }
             }
 

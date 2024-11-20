@@ -9,13 +9,21 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject PlayerBulletGO01; //This is our players bullet 01 prefab
     public GameObject PlayerBulletGO02; //This is our players bullet 02 prefab
+    public GameObject PlayerBulletGO03; //This is our players bullet 03 prefab
+    public GameObject PlayerBulletGO04; //This is our players bullet 04 prefab
     public GameObject bulletPosition01;
     public GameObject bulletPosition02;
+    public GameObject bulletPosition03;
+    public GameObject bulletPosition04;
+    public GameObject extra_part01;
+    public GameObject extra_part02;
     public GameObject ExplosionGO; //this is our explosion prefab
 
     //Reference to the lives ui text
     public Text LivesUIText;
-
+    private bool hasPowerShoot = false; // A PowerShoot aktiválása
+    public float powerShootActiveTime = 15f; // PowerShoot aktív időtartama
+    private float powerShootTimer = 0f; // Időzítő, ami számolja az időt
     const int MaxLives = 3; //Maximum player lives
     int Lives; //Current player lives
 
@@ -54,6 +62,16 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If PowerShoot is active, count down the timer
+        if (hasPowerShoot)
+        {
+            powerShootTimer -= Time.deltaTime; // Decrease the timer each frame
+
+            if (powerShootTimer <= 0f) // If the timer reaches 0, deactivate PowerShoot
+            {
+                DeactivatePowerShoot();
+            }
+        }
 
         //fire bullets when the spacebar is pressed
         if(Input.GetKeyDown("space")){
@@ -68,6 +86,17 @@ public class PlayerControl : MonoBehaviour
             //instantiate the seconf bullet
             GameObject bullet02 = (GameObject)Instantiate(PlayerBulletGO02);
             bullet02.transform.position = bulletPosition02.transform.position; //set the bullet initial position
+
+             // Instantiate the third bullet (only if PowerShoot is active)
+            if (hasPowerShoot)
+            {
+                GameObject bullet03 = Instantiate(PlayerBulletGO03);
+                bullet03.transform.position = bulletPosition03.transform.position;
+            
+                GameObject bullet04 = Instantiate(PlayerBulletGO04);
+                bullet04.transform.position = bulletPosition04.transform.position;
+                
+            }
 
         }
 
@@ -157,7 +186,25 @@ public class PlayerControl : MonoBehaviour
         explosion.transform.position = transform.position;
     }
 
-    
+    // Function to activate PowerShoot
+    public void ActivatePowerShoot()
+    {
+        powerShootTimer = powerShootActiveTime; // Set timer to 15 seconds
+        hasPowerShoot = true; // Engedélyezzük a PowerShoot-ot
 
+        // Make extra ship objects visible when PowerShoot is activated
+        extra_part01.SetActive(true);
+        extra_part02.SetActive(true);
+    }
+
+    // Function to deactivate PowerShoot after 15 seconds
+    public void DeactivatePowerShoot()
+    {
+        hasPowerShoot = false; // Disable PowerShoot
+        powerShootTimer = 0f; // Reset the timer
+
+        extra_part01.SetActive(false);
+        extra_part02.SetActive(false);
+    }
 
 }

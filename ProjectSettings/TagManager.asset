@@ -15,6 +15,7 @@ TagManager:
   - PlusHP
   - ShiledTag
   - ShieldOnPlayerTag
+  - PowerShootTag
   layers:
   - Default
   - TransparentFX
