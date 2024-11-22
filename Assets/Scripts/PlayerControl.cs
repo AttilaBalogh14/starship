@@ -32,15 +32,17 @@ public class PlayerControl : MonoBehaviour
     public GameObject ShieldOnPlayer; // Reference to the shield object
     private bool isFlashing = false; // Állapot, hogy a hajó villog-e
     private float flashTimer = 0f; // Időzítő a villogás vezérléséhez
-    public float flashDuration = 5f; // Az idő, amely alatt a hajó "villog"
+    public float flashDuration = 2f; // Az idő, amely alatt a hajó "villog"
     public SpriteRenderer playerSpriteRenderer; // A játékos hajójának SpriteRenderer-e
     public SpriteRenderer Extra_Part01SpriteRenderer; // A játékos hajójának SpriteRenderer-e
     public SpriteRenderer Extra_Part02SpriteRenderer; // A játékos hajójának SpriteRenderer-e
 
     //private int flashCycleCount = 0; // Nyomon követjük, hány ciklus ment végbe
-    private float flashInterval = 0.25f; // Az intervallum, amelyenként váltogatunk a láthatóságot
+    private float flashInterval = 0.15f; // Az intervallum, amelyenként váltogatunk a láthatóságot
     private float flashCooldown = 0f; // A villogás ütemezése, hogy minden 0.5 másodpercben történjen
     private bool isVisible = true; // Az állapot, hogy a hajó jelenleg látható-e vagy sem
+    public AudioSource shootAudio;
+    public AudioSource getdemageAudio;
     public void Init()
     {
         Lives = MaxLives;
@@ -118,7 +120,8 @@ public class PlayerControl : MonoBehaviour
         if(Input.GetKeyDown("space")){
 
             //Play the laser sound effect
-            GetComponent<AudioSource>().Play();
+            //GetComponent<AudioSource>().Play();
+            shootAudio.Play();
 
             //instantiate the first bullet
             GameObject bullet01 = (GameObject)Instantiate (PlayerBulletGO01);
@@ -198,6 +201,8 @@ public class PlayerControl : MonoBehaviour
     if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag"))
     {
         //PlayExplosion(); // Játékos robbanása
+        
+        getdemageAudio.Play();
 
         Lives--; // Egy élet levonása
         LivesUIText.text = Lives.ToString(); // Életek UI frissítése
