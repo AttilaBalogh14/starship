@@ -219,7 +219,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6097708685571250340, guid: 8bccd58f6246cda4ba11fa4ebfa67298, type: 3}
   m_PrefabInstance: {fileID: 1671085025}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &313373618
+--- !u!1 &238495306
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,58 +227,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 313373620}
-  - component: {fileID: 313373619}
-  - component: {fileID: 313373621}
+  - component: {fileID: 238495308}
+  - component: {fileID: 238495307}
   m_Layer: 0
-  m_Name: GameManagerGO
+  m_Name: GameoverMusicGO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &313373619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313373618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75cb1aa63b3098c4197842afe4c1574b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playButton: {fileID: 872323870}
-  playerShip: {fileID: 1119788980}
-  enemySpawner: {fileID: 496860200}
-  asteroidSpawner: {fileID: 596959212}
-  GameOverGO: {fileID: 1228836742}
-  scoreUITextGO: {fileID: 1297541291}
-  TimeCounterGO: {fileID: 464592425}
-  GameTitleGO: {fileID: 463552501}
---- !u!4 &313373620
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313373618}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07449299, y: 0.042621925, z: -9.924857}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &313373621
+--- !u!82 &238495307
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313373618}
+  m_GameObject: {fileID: 238495306}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -368,6 +332,75 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &238495308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238495306}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &313373618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 313373620}
+  - component: {fileID: 313373619}
+  m_Layer: 0
+  m_Name: GameManagerGO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &313373619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313373618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cb1aa63b3098c4197842afe4c1574b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playButton: {fileID: 872323870}
+  playerShip: {fileID: 1119788980}
+  enemySpawner: {fileID: 496860200}
+  asteroidSpawner: {fileID: 596959212}
+  GameOverGO: {fileID: 1228836742}
+  scoreUITextGO: {fileID: 1297541291}
+  TimeCounterGO: {fileID: 464592425}
+  GameTitleGO: {fileID: 463552501}
+  backgroundMusic: {fileID: 1295440248}
+  deathMusic: {fileID: 238495307}
+--- !u!4 &313373620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313373618}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.07449299, y: 0.042621925, z: -9.924857}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &463552501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,3 +2298,4 @@ SceneRoots:
   - {fileID: 2092855124}
   - {fileID: 463552503}
   - {fileID: 1295440249}
+  - {fileID: 238495308}
