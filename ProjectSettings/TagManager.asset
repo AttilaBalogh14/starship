@@ -11,6 +11,8 @@ TagManager:
   - AsteroidTag
   - PlayerBulletTag01
   - PlayerBulletTag02
+  - Boss1ShipTag
+  - Boss1BulletTag
   layers:
   - Default
   - TransparentFX

@@ -101,24 +101,32 @@ public class PlayerControl : MonoBehaviour
 
         transform.position = pos;
     }
-
-    void OnTriggerEnter2D(Collider2D col){
+void OnTriggerEnter2D(Collider2D col)
+    {
         //detect collision of the player ship with an enemy ship, or with an enemy bullet, or with an asteroid
-        if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag")){
+        if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag"))
+        {
+            // Subtract one life
+            Lives--;
+            LivesUIText.text = Lives.ToString(); // update lives UI text
+
+            // Trigger explosion effect
             PlayExplosion();
 
-            Lives--; //substract one live
-            LivesUIText.text = Lives.ToString(); // update lives ui text
-
-            if (Lives == 0) //if our player is dead
+            if (Lives <= 0) //if our player is dead
             {
                 //change game manager state to game over state
                 GameManagerGO.GetComponent<GameManager>().SetGameManagerState(GameManager.GameManagerState.GameOver);
 
-                //Destroy(gameObject); // Destroy the players ship
-                //hide the players ship
+                //hide the player's ship
                 gameObject.SetActive(false);
             }
+
+            /*// Destroy the boss bullet or handle collision effects
+            if (col.CompareTag("Boss1BulletTag") || col.CompareTag("Boss1ShipTag"))
+            {
+                Destroy(col.gameObject); // Remove the bullet or boss (if needed)
+            }*/
         }
     }
 
@@ -134,3 +142,5 @@ public class PlayerControl : MonoBehaviour
 
 
 }
+
+

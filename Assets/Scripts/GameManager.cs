@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject playButton;
     public GameObject playerShip;
     public GameObject enemySpawner; //reference to our enemy spawner
+   // public GameObject Boss1Spawner; //reference to our boss1 spawner
     public GameObject asteroidSpawner; //reference to our asteroid spawner
     public GameObject GameOverGO; //reference to the game over image
     public GameObject scoreUITextGO; //reference to the score text UI game object
@@ -68,7 +69,10 @@ public class GameManager : MonoBehaviour
             enemySpawner.GetComponent<EnemySpawner>().ScheduleEnemySpawner();
 
             //start asteroid spawner
-            asteroidSpawner.GetComponent<AsteroidSpawner>().ScheduleAsteroidSpawner();
+            asteroidSpawner.GetComponent<AsteroidSpawner>().ScheduleAsteroidSpawner();  
+            
+            //start boss1 spawner
+            //Boss1Spawner.GetComponent<Boss1SpawnerGO>().ScheduleBoss1Spawner();
 
 
             //start the time counter
@@ -83,6 +87,8 @@ public class GameManager : MonoBehaviour
 
             //stop enemy spawner
             enemySpawner.GetComponent<EnemySpawner>().UnscheduleEnemySpawner();
+            //stop boss1 spawner
+            //Boss1Spawner.GetComponent<Boss1SpawnerGO>().UnscheduleBoss1Spawner();
             //stop asteroid spawner
             asteroidSpawner.GetComponent<AsteroidSpawner>().UnscheduleAsteroidSpawner();
             //display game over
