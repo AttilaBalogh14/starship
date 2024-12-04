@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
 
             // Initialize PlusHPSpawn script
-            if (PlusHPSpawnGO != null)
+            /*if (PlusHPSpawnGO != null)
             {
                 // Ensure PlusHPSpawn component is attached and set the reference
                 PlusHPSpawn plusHPSpawnScript = PlusHPSpawnGO.GetComponent<PlusHPSpawn>();
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
                     // Start the timer
                     plusHPSpawnScript.StartTimer();
                 }
-            }
+            }*/
 
             // Initialize ShieldSpwan script
             if (ShieldSpawnGO != null)
@@ -147,8 +147,8 @@ public class GameManager : MonoBehaviour
                 }
             }
             
-            //hide shield 
-            ShieldOnPlayer.SetActive(false);
+            /*//hide shield 
+            ShieldOnPlayer.SetActive(false);*/
             
 
             // Initialize PlusHPSpawn script
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            // Initialize ShieldSpwan script
+            /*// Initialize ShieldSpwan script
             if (ShieldSpawnGO != null)
             {
                 // Ensure ShieldSpawn component is attached and set the reference
@@ -173,9 +173,9 @@ public class GameManager : MonoBehaviour
                     // Start the timer
                     ShieldSpawnScript.StartTimer();
                 }
-            }
+            }*/
 
-            // Initialize PowerShootSpawn script
+            /*// Initialize PowerShootSpawn script
             if (PowerShootSpawnGO != null)
             {
                 // Ensure PowerShootSpawn component is attached and set the reference
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
                     // Start the timer
                     PowerShootSpawnScript.StartTimer();
                 }
-            }
+            }*/
             
             //hide shield 
             ShieldOnPlayer.SetActive(false);
