@@ -166,4 +166,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerShip: {fileID: 0}
-  ShieldOnPlayer: {fileID: 0}
+  ShieldOnPlayer: {fileID: 5230076328609587033, guid: 3cf9e3fe487d30d41927b04323dd1535, type: 3}
