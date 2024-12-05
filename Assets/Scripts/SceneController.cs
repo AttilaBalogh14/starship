@@ -1,30 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneController : MonoBehaviour
-{
-    public static SceneController instance;
+public class SceneController : MonoBehaviour {
 
-    private void Awake()
+    public static void LoadScene(int sceneIndex)
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        SceneManager.LoadScene(sceneIndex);
+    }
 
-    }
-    public void NextLevel()
+    
+    public static void NextLevel()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-    public void LoadScene(string sceneName)
-    {
-        SceneManager.LoadSceneAsync(sceneName);
+        LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     
 }

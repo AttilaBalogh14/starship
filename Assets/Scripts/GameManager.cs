@@ -297,16 +297,42 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // If the shield is active, decrease the shield timer
-        if (ShieldOnPlayer.activeSelf)
+        // Ellenőrizzük, hogy a ShieldOnPlayer létezik
+        if (ShieldOnPlayer != null && ShieldOnPlayer.activeSelf)
         {
             shieldtimer -= Time.deltaTime;
 
-            // When the timer runs out, deactivate the shield
+            // Ha az időzítő lejárt, deaktiváljuk a pajzsot
             if (shieldtimer <= 0f)
             {
-                ShieldOnPlayer.SetActive(false);  // Deactivate the shield
+                ShieldOnPlayer.SetActive(false);
+            }
+        }
+        else if (ShieldOnPlayer == null)
+        {
+            Debug.LogWarning("ShieldOnPlayer objektum meg lett semmisítve.");
+            ShieldOnPlayer = null;
+        }
+     
+    }
+
+    bool IsShieldActive()
+    {
+        return ShieldOnPlayer != null && ShieldOnPlayer.activeSelf;
+    }
+
+    void Updates()
+    {
+        if (IsShieldActive())
+        {
+            shieldtimer -= Time.deltaTime;
+
+            if (shieldtimer <= 0f)
+            {
+                ShieldOnPlayer.SetActive(false);
             }
         }
     }
-}
+
+
+    }
