@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerControl : MonoBehaviour
 {
     public GameObject GameManagerGO; //reference to our game manager
+    public GameManager GameManagerSrcipt;
 
     public GameObject PlayerBulletGO01; //This is our players bullet 01 prefab
     public GameObject PlayerBulletGO02; //This is our players bullet 02 prefab
@@ -43,6 +44,8 @@ public class PlayerControl : MonoBehaviour
     private bool isVisible = true; // Az állapot, hogy a hajó jelenleg látható-e vagy sem
     public AudioSource shootAudio;
     public AudioSource getdemageAudio;
+    private bool isInvulnerable = false;
+    private float invulnerabilityTime = 2f; // 1 másodperc invulnerabilitás
     public void Init()
     {
         Lives = MaxLives;
@@ -70,6 +73,7 @@ public class PlayerControl : MonoBehaviour
     {
         // Initialize the PlusHPSpawn script from the GameManager
         plusHPSpawnScript = GameManagerGO.GetComponent<GameManager>().PlusHPSpawnGO.GetComponent<PlusHPSpawn>();
+        GameManagerSrcipt = GameManagerGO.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -185,45 +189,60 @@ public class PlayerControl : MonoBehaviour
         transform.position = pos;
     }
 
+    void StartInvulnerability() {
+        isInvulnerable = true;
+        Invoke("EndInvulnerability", invulnerabilityTime);
+    }
+
+    void EndInvulnerability() {
+        isInvulnerable = false;
+    }
+
    void OnTriggerEnter2D(Collider2D col)
 {
     // Ha a pajzs aktív, akkor eltávolítjuk az ellenséges objektumot, de nem vonunk le életet
-    if (ShieldOnPlayer.activeSelf)
+    if (GameManagerSrcipt.isShieldActive == true)
     {
-        if (col.tag == "EnemyBulletTag" || col.tag == "EnemyShipTag" || col.tag == "AsteroidTag")
+        if (col.CompareTag("EnemyBulletTag") || col.CompareTag("EnemyShipTag") || col.CompareTag("AsteroidTag"))
         {
+            // Ha pajzs van, töröljük az ütköző objektumot
             Destroy(col.gameObject); // Töröljük az ütköző objektumot (pl. ellenséges golyó, aszteroida)
-            return; // Ne folytassuk tovább a kódot, ha a pajzs aktív, mivel nem kell életet vonni
+            return; // Ne folytassuk tovább, ha a pajzs aktív
         }
     }
 
-    // Ha a pajzs nem aktív, akkor le kell vonni életet, ha az ütközés ellenséggel vagy golyóval történt
-    if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag"))
-    {
-        //PlayExplosion(); // Játékos robbanása
-        
-        getdemageAudio.Play();
-
-        Lives--; // Egy élet levonása
-        LivesUIText.text = Lives.ToString(); // Életek UI frissítése
-
-        if (Lives == 0) // Ha a játékos meghalt
+    // Ha a pajzs nem aktív, akkor csökkentsük az életet, ha az ütközés ellenséggel vagy golyóval történt
+    if (GameManagerSrcipt.isShieldActive == false){
+        if (col.tag == "EnemyShipTag" || col.tag == "EnemyBulletTag" || col.tag == "AsteroidTag")
         {
-            // Változtassuk meg a játék állapotát game over-re
-            GameManagerGO.GetComponent<GameManager>().SetGameManagerState(GameManager.GameManagerState.GameOver);
+            if (isInvulnerable) return; // Ignore collisions if invulnerable
 
-            // A játékos hajóját eltüntetjük
-            gameObject.SetActive(false);
+            if (GameManagerSrcipt.isShieldActive == false) // Ha a pajzs nem aktív
+            {         
+                getdemageAudio.Play(); // A sérülés hang lejátszása
+
+                Lives--; // Egy élet levonása
+                LivesUIText.text = Lives.ToString(); // Életek UI frissítése
+
+                // Ha a játékos meghalt
+                if (Lives <= 0) 
+                {
+                    // Game over állapot beállítása
+                    GameManagerGO.GetComponent<GameManager>().SetGameManagerState(GameManager.GameManagerState.GameOver);
+                    gameObject.SetActive(false); // Játékos eltüntetése
+                }
+
+                // Ha 1 élet maradt, értesítjük a PlusHPSpawn scriptet
+                if (Lives == 1 && plusHPSpawnScript != null)
+                {
+                    plusHPSpawnScript.CheckAndSpawnPlusHP(Lives);
+                }
+
+                // Indítsuk el a villogást
+                StartFlashing();
+                StartInvulnerability();
+            }
         }
-
-        // Ha 1 élet maradt, értesítjük a PlusHPSpawn scriptet
-        if (Lives == 1 && plusHPSpawnScript != null)
-        {
-            plusHPSpawnScript.CheckAndSpawnPlusHP(Lives);
-        }
-
-        // Indítsuk el a villogást
-        StartFlashing();
     }
 }
 
@@ -269,6 +288,7 @@ public class PlayerControl : MonoBehaviour
     {
         isFlashing = false; // Leállítjuk a villogást
         playerSpriteRenderer.enabled = true; // A hajó látható lesz
+        EndInvulnerability();
     }
 
     public void ResetVisibility()

@@ -1,0 +1,20 @@
+{
+    "levels": [
+      {
+        "level": 1,
+        "title": "Az első küldetés",
+        "description": "A távoli jövőben az űrhajósok bátorsága és a technológia fejlődése lehetővé tette az emberiség számára, hogy új világokat fedezzen fel. Az első küldetés célja, hogy Alex Starwind elinduljon Zarkon sötét flottájának megfékezésére, és elérje a Dark Demontir Galaxy-t. Az úton számos akadályt kell legyőznie, miközben az űrkalózok folyamatosan támadják őt."
+      },
+      {
+        "level": 2,
+        "title": "A köztes galaxis védelme",
+        "description": "Zarkon két alparancsnokra bízza a köztes galaxisok védelmét, akik kemény ellenállást tanúsítanak Alex ellen. Az őrült meteor záporok, valamint a harcok közepette Alexnek meg kell mutatnia, hogy megérdemli a legendás űrhajósok címét, és képes legyőzni az ellenséges flottát."
+      },
+      {
+        "level": 3,
+        "title": "A végső csata",
+        "description": "Miután sikerült legyőzni Zarkon alparancsnokait, Alex végre elérkezik a fő csatához. Zarkon, az űrkalózok rettegett vezetője egy hatalmas flotta élén várja. A csata során Alex minden tudását és bátorságát beveti, hogy megállítsa a kalózokat, és visszaállítsa a békét a galaxisban."
+      }
+    ]
+  }
+  

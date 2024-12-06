@@ -2,6 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Ne felejts el hivatkozni a UI-ra
+using System.IO; // Hozzáadva, hogy elérhesd a Path osztályt
+using TMPro; // TextMeshPro namespace
+
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +31,31 @@ public class GameManager : MonoBehaviour
     public GameObject ShieldOnPlayer;
     private float shieldduration = 15f;
     private float shieldtimer;
+    public int levelNumber;
+    public bool isShieldActive = false;  // Külön változó a pajzs aktív állapotához
+
+    // Referencia a szövegdobozhoz
+    public TextMeshProUGUI levelDescriptionText;  // UI szöveg, amely megjeleníti a szint leírását
+    public TextMeshProUGUI levelTitle;  // UI szöveg, amely megjeleníti a szint leírását
+
+    // JSON fájl beolvasása
+    private string jsonFilePath = "level_descriptions.json"; // A JSON fájl elérési útja
+
+    [System.Serializable]
+    public class Level
+    {
+        public int level;
+        public string title;
+        public string description;
+    }
+
+    [System.Serializable]
+    public class LevelList
+    {
+        public Level[] levels;
+    }
+
+    private LevelList levelList;
 
     public enum GameManagerState
     {
@@ -49,8 +78,36 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);  // Destroy duplicate GameManager if one already exists
         }
+
+        ShieldOnPlayer.SetActive(false);
     }
 
+        void LoadLevelDescriptions()
+        {
+            // Betölti a JSON fájlt
+            string filePath = Path.Combine(Application.streamingAssetsPath, jsonFilePath);
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                levelList = JsonUtility.FromJson<LevelList>(json);
+
+                if (levelList != null && levelList.levels.Length > 0)
+                {
+
+                    // Itt megjelenítjük a szint leírását és címét a szövegdobozban
+                    levelDescriptionText.text = levelList.levels[getLevelNumber()].description;
+                    levelTitle.text = levelList.levels[getLevelNumber()].title;
+                }
+                else
+                {
+                    Debug.LogError("A szint leírása nem található vagy hibás a JSON!");
+                }
+            }
+            else
+            {
+                Debug.LogError("JSON fájl nem található!");
+            }
+        }
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +119,52 @@ public class GameManager : MonoBehaviour
             backgroundMusic.Play();
         if (deathMusic != null)
             deathMusic.Stop();
+
+        LoadLevelDescriptions();  // Betöltjük a szint információkat
+
+        ShieldOnPlayer.SetActive(true);
+    }
+
+        
+
+    public void setLevelNumber(int LevelNumber){
+        levelNumber = LevelNumber;
+    }
+
+    public int getLevelNumber(){
+        return levelNumber;
+    }
+
+    // Szint leírásának megjelenítése
+    /*void DisplayLevelDescription(int levelIndex)
+    {
+        if (levelDescriptionText != null && levelDescriptionText.gameObject.activeSelf )
+        {
+            // Az adott szint leírásának keresése és megjelenítése
+            foreach (var level in levelList.levels)
+            {
+                if (level.level == levelIndex)
+                {
+                    levelDescriptionText.text = level.description;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("levelDescriptionText nem érvényes.");
+        }
+    }
+    */
+     // Play gomb kattintás eseménye
+    public void OnPlayButtonClick()
+    {
+        // Tüntessük el a szövegdobozt, amikor a Play gombra kattintanak
+        levelDescriptionText.gameObject.SetActive(false);
+        levelTitle.gameObject.SetActive(false);
+        
+        // A játékot elindítjuk itt
+        // GameManager state frissítés, stb.
     }
 
     //Function to update the game manager state
@@ -80,12 +183,20 @@ public class GameManager : MonoBehaviour
             // Set play button visible (active)
             playButton.SetActive(true);
 
+
             // Play background music
             if (backgroundMusic != null && !backgroundMusic.isPlaying)
                 backgroundMusic.Play();
             
             if (deathMusic != null && deathMusic.isPlaying)
                 deathMusic.Stop();
+
+            // Példa: Szint 1 leírásának megjelenítése
+            //DisplayLevelDescription(levelNumber);
+            //setLevelNumber(levelNumber +1);
+            //DisplayLevelDescription(getLevelNumber());
+
+            ShieldOnPlayer.SetActive(false);
 
             break;
 
@@ -111,17 +222,7 @@ public class GameManager : MonoBehaviour
             // Start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
 
-            // Initialize PlusHPSpawn script
-            /*if (PlusHPSpawnGO != null)
-            {
-                // Ensure PlusHPSpawn component is attached and set the reference
-                PlusHPSpawn plusHPSpawnScript = PlusHPSpawnGO.GetComponent<PlusHPSpawn>();
-                if (plusHPSpawnScript != null)
-                {
-                    // Start the timer
-                    plusHPSpawnScript.StartTimer();
-                }
-            }*/
+            ShieldOnPlayer.SetActive(false);
 
             // Initialize ShieldSpwan script
             if (ShieldSpawnGO != null)
@@ -147,9 +248,6 @@ public class GameManager : MonoBehaviour
                 }
             }
             
-            /*//hide shield 
-            ShieldOnPlayer.SetActive(false);*/
-            
 
             // Initialize PlusHPSpawn script
             if (PlusHPSpawnGO != null)
@@ -162,31 +260,7 @@ public class GameManager : MonoBehaviour
                     plusHPSpawnScript.StartTimer();
                 }
             }
-
-            /*// Initialize ShieldSpwan script
-            if (ShieldSpawnGO != null)
-            {
-                // Ensure ShieldSpawn component is attached and set the reference
-                ShieldSpawn ShieldSpawnScript = ShieldSpawnGO.GetComponent<ShieldSpawn>();
-                if (ShieldSpawnScript != null)
-                {
-                    // Start the timer
-                    ShieldSpawnScript.StartTimer();
-                }
-            }*/
-
-            /*// Initialize PowerShootSpawn script
-            if (PowerShootSpawnGO != null)
-            {
-                // Ensure PowerShootSpawn component is attached and set the reference
-                PowerShootSpawn PowerShootSpawnScript = PowerShootSpawnGO.GetComponent<PowerShootSpawn>();
-                if (PowerShootSpawnScript != null)
-                {
-                    // Start the timer
-                    PowerShootSpawnScript.StartTimer();
-                }
-            }*/
-            
+           
             //hide shield 
             ShieldOnPlayer.SetActive(false);
             
@@ -276,8 +350,8 @@ public class GameManager : MonoBehaviour
         GMState = GameManagerState.Gameplay;
         UpdateGameManagerState();
         // Ne hagyjuk, hogy a hajó villogjon, amikor újraindul a játék
-    playerShip.GetComponent<PlayerControl>().StopFlashing();  // Leállítjuk a villogást a PlayerControl scriptben
-    playerShip.GetComponent<PlayerControl>().ResetVisibility();  // Biztosítjuk, hogy a hajó látható legyen
+        playerShip.GetComponent<PlayerControl>().StopFlashing();  // Leállítjuk a villogást a PlayerControl scriptben
+        playerShip.GetComponent<PlayerControl>().ResetVisibility();  // Biztosítjuk, hogy a hajó látható legyen
     }
 
     //Function to change manager state to opening state
@@ -292,6 +366,8 @@ public class GameManager : MonoBehaviour
         {
             ShieldOnPlayer.SetActive(true);  // Activate the shield
             shieldtimer = shieldduration;   // Reset the shield timer
+
+            isShieldActive = true;
         }
     }
 
@@ -306,6 +382,7 @@ public class GameManager : MonoBehaviour
             if (shieldtimer <= 0f)
             {
                 ShieldOnPlayer.SetActive(false);
+                isShieldActive = false;
             }
         }
         else if (ShieldOnPlayer == null)
@@ -316,23 +393,6 @@ public class GameManager : MonoBehaviour
      
     }
 
-    bool IsShieldActive()
-    {
-        return ShieldOnPlayer != null && ShieldOnPlayer.activeSelf;
-    }
-
-    void Updates()
-    {
-        if (IsShieldActive())
-        {
-            shieldtimer -= Time.deltaTime;
-
-            if (shieldtimer <= 0f)
-            {
-                ShieldOnPlayer.SetActive(false);
-            }
-        }
-    }
 
 
     }
