@@ -7,7 +7,7 @@ public class FinishPoint : MonoBehaviour
         if (collision.CompareTag("PlayerShipTag"))
         {
             //go to next level
-            SceneController.instance.NextLevel();
+            SceneController.NextLevel();
         }
     }
 
