@@ -214,8 +214,8 @@ public class PlayerControl : MonoBehaviour
 
     // Ha a pajzs nem aktív, akkor le kell vonni életet, ha az ütközés ellenséggel vagy golyóval történt
     if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") 
-    || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2ShipTag") || (col.tag == "Boss2BulletTag")
-    || (col.tag == "Boss3ShipTag") || (col.tag == "Boss3BulletTag"))
+    || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2ShipTag") 
+    || (col.tag == "Boss2BulletTag") || (col.tag == "Boss3ShipTag") || (col.tag == "Boss3BulletTag"))
     {
        {
             if (isInvulnerable) return; // Ignore collisions if invulnerable
