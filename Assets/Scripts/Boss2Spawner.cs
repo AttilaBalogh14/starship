@@ -4,17 +4,17 @@ using UnityEngine;
 
 
 
-public class Boss1SpawnerGO : MonoBehaviour
+public class Boss2SpawnerGO : MonoBehaviour
 {
-    public GameObject boss1GO;    // Húzd ide a boss1GO prefabot
-    public int spawnScore = 100;   // A pontszám, amelynél a boss megjelenik
+    public GameObject boss2GO;    // Húzd ide a boss1GO prefabot
+    public int spawnScore = 500;   // A pontszám, amelynél a boss megjelenik
 
     private bool hasSpawned = false; // Ellenőrzi, hogy a boss megjelent-e már
     private GameScore gameScore;    // Hivatkozás a GameScore scriptre
 
     void Start()
     {
-        // A GameScore komponens
+        // Keresd meg a GameScore komponenst
         gameScore = FindObjectOfType<GameScore>();
 
         if (gameScore == null)
@@ -23,25 +23,25 @@ public class Boss1SpawnerGO : MonoBehaviour
         }
 
         
-        InvokeRepeating("CheckScoreAndSpawnBoss1", 1f, 1f); // Ellenőrzés 1 másodpercenként
+        InvokeRepeating("CheckScoreAndSpawnBoss2", 1f, 1f); // Ellenőrzés 1 másodpercenként
     }
 
-    void CheckScoreAndSpawnBoss1()
+    void CheckScoreAndSpawnBoss2()
     {
         // Ellenőrzi, hogy elértük-e a szükséges pontszámot
         if (gameScore != null && gameScore.Score >= spawnScore && !hasSpawned)
         {
-            SpawnBoss1();
+            SpawnBoss();
         }
     }
 
-    void SpawnBoss1()
+    void SpawnBoss()
     {
         // A boss megjelenítése a bal felső sarokban
         Vector3 spawnPosition = GetTopLeftCorner();
         spawnPosition.x += 0.8f; // X tengelyen jobbra mozgatjuk
         spawnPosition.y -= 0.8f; // Y tengelyen lefelé mozgatjuk
-        Instantiate(boss1GO, spawnPosition, Quaternion.identity);
+        Instantiate(boss2GO, spawnPosition, Quaternion.identity);
 
         hasSpawned = true; // Csak egyszer jelenik meg
         Debug.Log("Boss spawned at: " + spawnPosition);
@@ -55,18 +55,4 @@ public class Boss1SpawnerGO : MonoBehaviour
         topLeft.z = 0; // 2D játékban a Z-tengely nullázása
         return topLeft;
     }
-
-    
-    /*public void ScheduleBoss1Spawner()
-    {
-        spawnScore = 100;
-        Invoke("SpawnBoss1",spawnScore);
-
-    }
-    
-
-    public void UnscheduleBoss1Spawner()
-    {
-        CancelInvoke("SpawnBoss1");
-    }*/
 }

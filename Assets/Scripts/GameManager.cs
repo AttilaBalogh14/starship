@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject playButton;
     public GameObject playerShip;
     public GameObject enemySpawner; //reference to our enemy spawner
-   // public GameObject Boss1Spawner; //reference to our boss1 spawner
+    //public GameObject Boss1Spawner; //reference to our boss1 spawner
     public GameObject asteroidSpawner; //reference to our asteroid spawner
     public GameObject GameOverGO; //reference to the game over image
     public GameObject scoreUITextGO; //reference to the score text UI game object
