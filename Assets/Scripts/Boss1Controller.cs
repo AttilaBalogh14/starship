@@ -74,6 +74,7 @@ public class Boss1Controller : MonoBehaviour
             {
                 OnBoss1Destroyed?.Invoke(); // Esemény indítása
                 Destroy(gameObject);
+                scoreUITextGO.GetComponent<GameScore>().Score += 100;
             }
 
             // Elpusztítjuk a játékos lövedékét (ha az találta el)
