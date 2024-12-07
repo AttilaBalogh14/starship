@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishPoint : MonoBehaviour
+public class FinishPoint1Controller : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -520,6 +520,7 @@ MonoBehaviour:
   quitButton: {fileID: 310946618}
   playerShip: {fileID: 590767084}
   enemySpawner: {fileID: 496860200}
+  Boss1Spawner: {fileID: 0}
   asteroidSpawner: {fileID: 596959212}
   GameOverGO: {fileID: 1228836742}
   scoreUITextGO: {fileID: 1297541291}
@@ -2965,6 +2966,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1515389263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1515389265}
+  - component: {fileID: 1515389264}
+  m_Layer: 0
+  m_Name: Boss2SpawnerGO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1515389264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515389263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f72871abdb6b334eb5a57effc28eb47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss2GO: {fileID: 7250957786839938043, guid: d70b9555806f4a94cad3808fc99b7b71, type: 3}
+  spawnScore: 300
+--- !u!4 &1515389265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515389263}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.2720075, y: -2.0421247, z: 0.014333241}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1639427463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3681,6 +3728,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 590767091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2040577009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2040577011}
+  - component: {fileID: 2040577010}
+  m_Layer: 0
+  m_Name: FinishPoint2SpawnerGO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2040577010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040577009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f262aee2247076499e0fc191b508fc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FinishPoint2GO: {fileID: 8003465796018832737, guid: d4c42618b44a9e54aa4de2a83ad4b94e, type: 3}
+--- !u!4 &2040577011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040577009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0070901, y: 1.1631382, z: -0.01836264}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092855122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3899,10 +3991,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3908436224317939641, guid: d4c42618b44a9e54aa4de2a83ad4b94e, type: 3}
-      propertyPath: GameManagerGO
-      value: 
-      objectReference: {fileID: 313373618}
     - target: {fileID: 7318604395578100835, guid: d4c42618b44a9e54aa4de2a83ad4b94e, type: 3}
       propertyPath: m_Name
       value: Finish Point
@@ -3964,6 +4052,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2040577011}
   - {fileID: 1043594971}
   - {fileID: 590767091}
   - {fileID: 496860202}
@@ -3979,10 +4068,10 @@ SceneRoots:
   - {fileID: 1295440249}
   - {fileID: 2132754090}
   - {fileID: 471758827}
-  - {fileID: 4560027076745593225}
   - {fileID: 823670487}
   - {fileID: 1133355099}
   - {fileID: 1823093202}
   - {fileID: 484304403}
   - {fileID: 673929606}
   - {fileID: 1236063370}
+  - {fileID: 1515389265}

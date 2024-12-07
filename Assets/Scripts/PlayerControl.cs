@@ -203,7 +203,8 @@ public class PlayerControl : MonoBehaviour
     // Ha a pajzs aktív, akkor eltávolítjuk az ellenséges objektumot, de nem vonunk le életet
     if (GameManagerSrcipt.isShieldActive == true)
     {
-        if (col.CompareTag("EnemyBulletTag") || col.CompareTag("EnemyShipTag") || col.CompareTag("AsteroidTag"))
+        if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") 
+        || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2BulletTag") || (col.tag == "Boss3BulletTag"))
         {
             // Ha pajzs van, töröljük az ütköző objektumot
             Destroy(col.gameObject); // Töröljük az ütköző objektumot (pl. ellenséges golyó, aszteroida)
@@ -211,10 +212,12 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    // Ha a pajzs nem aktív, akkor csökkentsük az életet, ha az ütközés ellenséggel vagy golyóval történt
-    if (GameManagerSrcipt.isShieldActive == false){
-        if (col.tag == "EnemyShipTag" || col.tag == "EnemyBulletTag" || col.tag == "AsteroidTag")
-        {
+    // Ha a pajzs nem aktív, akkor le kell vonni életet, ha az ütközés ellenséggel vagy golyóval történt
+    if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") 
+    || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2ShipTag") || (col.tag == "Boss2BulletTag")
+    || (col.tag == "Boss3ShipTag") || (col.tag == "Boss3BulletTag"))
+    {
+       {
             if (isInvulnerable) return; // Ignore collisions if invulnerable
 
             if (GameManagerSrcipt.isShieldActive == false) // Ha a pajzs nem aktív
@@ -297,3 +300,5 @@ public class PlayerControl : MonoBehaviour
     }
 
 }
+
+
