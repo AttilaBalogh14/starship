@@ -11,7 +11,7 @@ public class Boss3Gun : MonoBehaviour
     public Transform firePointRight2; // A jobb oldali lövési pont
     public Transform firePointCenter; // A kozepso lövési pont
     public float fireRate = 5f;    // Lövési sebesség (másodpercben)
-    private float nextFireTime = 2f; // Következő lövés ideje
+    private float nextFireTime = 0.5f; // Következő lövés ideje
 
     private Transform player; // A játékos pozíciója
 

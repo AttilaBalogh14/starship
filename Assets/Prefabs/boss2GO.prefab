@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  Lives: 12
+  Lives: 20
   bulletPrefab: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
   player: {fileID: 0}

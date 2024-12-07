@@ -63,16 +63,22 @@ public bool HasSpawned()
     return hasSpawned;
 }
 
-    /*public void ScheduleBoss1Spawner()
+   /*public void ScheduleBoss1Spawner()
     {
-        spawnScore = 100;
-        Invoke("SpawnBoss1",spawnScore);
-
+        //spawnScore = newSpawnScore; // Új spawn pontszám beállítása
+        hasSpawned = false;         // Visszaállítjuk, hogy újra spawnolható legyen
     }
-    
 
     public void UnscheduleBoss1Spawner()
     {
-        CancelInvoke("SpawnBoss1");
+        hasSpawned = true; // Eltávolítjuk a spawner-t
+    }
+
+    public void DestroyActiveBoss1()
+{
+    GameObject activeBoss1 = GameObject.FindGameObjectWithTag("Boss1ShipTag");
+    if (activeBoss1 != null)
+    {
+        Destroy(activeBoss1);
     }*/
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5830913076728337501}
   m_Layer: 0
   m_Name: Boss3BulletGO
-  m_TagString: Untagged
+  m_TagString: Boss3BulletTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb713b8271f1b53498e43df8fd94d029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 12
 --- !u!50 &954014067663241650
 Rigidbody2D:
   serializedVersion: 4

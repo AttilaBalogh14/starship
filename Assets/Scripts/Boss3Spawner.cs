@@ -55,4 +55,20 @@ public class Boss3SpawnerGO : MonoBehaviour
         topLeft.z = 0; // 2D játékban a Z-tengely nullázása
         return topLeft;
     }
+
+   /* public void UnscheduleBoss3Spawner()
+    {
+        hasSpawned = true; // Eltávolítjuk a spawner-t
+    }
+
+    public void DestroyActiveBoss3()
+{
+    GameObject activeBoss3 = GameObject.FindGameObjectWithTag("Boss3ShipTag");
+    if (activeBoss3 != null)
+    {
+        Destroy(activeBoss3);
+    }*/
 }
+
+
+

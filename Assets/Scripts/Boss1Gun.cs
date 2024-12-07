@@ -8,7 +8,7 @@ public class Boss : MonoBehaviour
     public Transform firePointLeft;  // A bal oldali lövési pont
     public Transform firePointRight; // A jobb oldali lövési pont
     public float fireRate = 5f;    // Lövési sebesség (másodpercben)
-    private float nextFireTime = 2f; // Következő lövés ideje
+    private float nextFireTime = 4f; // Következő lövés ideje
 
     private Transform player; // A játékos pozíciója
 
