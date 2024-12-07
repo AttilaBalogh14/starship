@@ -2,6 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Ne felejts el hivatkozni a UI-ra
+using System.IO; // Hozzáadva, hogy elérhesd a Path osztályt
+using TMPro; // TextMeshPro namespace
+
 
 public class GameManager : MonoBehaviour
 {
@@ -10,13 +14,20 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     //Reference to our game objects
     public GameObject playButton;
+    public GameObject quitButton;
     public GameObject playerShip;
     public GameObject enemySpawner; //reference to our enemy spawner
     public GameObject asteroidSpawner; //reference to our asteroid spawner
     public GameObject GameOverGO; //reference to the game over image
     public GameObject scoreUITextGO; //reference to the score text UI game object
     public GameObject TimeCounterGO; //reference to the time counter game object
+    private TimeCounter timeCounterScript;
     public GameObject GameTitleGO; // reference to the GameTitleGO
+
+    private HighscoreManager highscoreManagerScript;
+    GameObject ScoreTextGO;
+    private GameScore scoreScript; // Reference to GameScore script to access the score
+
 
     // Reference to AudioSources
     public AudioSource backgroundMusic;
@@ -25,8 +36,35 @@ public class GameManager : MonoBehaviour
     public GameObject ShieldSpawnGO; // This is a reference to the GameObject that holds the ShieldSpawn script
     public GameObject PowerShootSpawnGO; // This is a reference to the Gameobject that holfs the PowerShootSpawn script
     public GameObject ShieldOnPlayer;
+    
+    private float savedTimeElapsed;
     private float shieldduration = 15f;
     private float shieldtimer;
+    public int levelNumber;
+    public bool isShieldActive = false;  // Külön változó a pajzs aktív állapotához
+
+    // Referencia a szövegdobozhoz
+    public TextMeshProUGUI levelDescriptionText;  // UI szöveg, amely megjeleníti a szint leírását
+    public TextMeshProUGUI levelTitle;  // UI szöveg, amely megjeleníti a szint leírását
+
+    // JSON fájl beolvasása
+    private string jsonFilePath = "level_descriptions.json"; // A JSON fájl elérési útja
+
+    [System.Serializable]
+    public class Level
+    {
+        public int level;
+        public string title;
+        public string description;
+    }
+
+    [System.Serializable]
+    public class LevelList
+    {
+        public Level[] levels;
+    }
+
+    private LevelList levelList;
 
     public enum GameManagerState
     {
@@ -49,8 +87,36 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);  // Destroy duplicate GameManager if one already exists
         }
+
+        ShieldOnPlayer.SetActive(false);
     }
 
+        void LoadLevelDescriptions()
+        {
+            // Betölti a JSON fájlt
+            string filePath = Path.Combine(Application.streamingAssetsPath, jsonFilePath);
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                levelList = JsonUtility.FromJson<LevelList>(json);
+
+                if (levelList != null && levelList.levels.Length > 0)
+                {
+
+                    // Itt megjelenítjük a szint leírását és címét a szövegdobozban
+                    levelDescriptionText.text = levelList.levels[getLevelNumber()].description;
+                    levelTitle.text = levelList.levels[getLevelNumber()].title;
+                }
+                else
+                {
+                    Debug.LogError("A szint leírása nem található vagy hibás a JSON!");
+                }
+            }
+            else
+            {
+                Debug.LogError("JSON fájl nem található!");
+            }
+        }
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +128,146 @@ public class GameManager : MonoBehaviour
             backgroundMusic.Play();
         if (deathMusic != null)
             deathMusic.Stop();
+
+        LoadLevelDescriptions();  // Betöltjük a szint információkat
+
+        ShieldOnPlayer.SetActive(false);
+
+        highscoreManagerScript = FindObjectOfType<HighscoreManager>();
+
+        if (highscoreManagerScript != null)
+        {
+            highscoreManagerScript.LoadHighscore(); // Betöltjük a legmagasabb pontszámot
+        }
+
+        ScoreTextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+
+        scoreScript = scoreUITextGO.GetComponent<GameScore>();
+        //scoreScript.ResetScore();
+
+        // Inicializáljuk a TimeCounter scriptet
+        timeCounterScript = TimeCounterGO.GetComponent<TimeCounter>();
+
+
+
+    }
+
+    // Játék újrakezdése vagy szintváltás előtt elmentjük az időt
+    public void SaveTimeElapsed()
+    {
+        timeCounterScript.SaveTime(); // Elmentjük az időt
+    }
+
+    // A játék kezdése előtt visszaállítjuk az időt
+    public void RestoreTimeElapsed()
+    {
+        // Restore the time when transitioning to the next level
+        timeCounterScript.RestoreTime(); // Restore the time
+        timeCounterScript.StartTimeCounter(); // Start the counter again
+    }
+
+    // Game over event
+    public void OnGameOver()
+    {
+        int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+        highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
+
+        // Egyéb logikák a játék vége után (pl. játékos elpusztulása, UI frissítése)
+
+        // A pontszám nullázása, ha meghalsz
+        scoreScript.ResetScore();
+        // Itt menthetjük a legmagasabb pontot (ha szükséges)
+        //scoreScript.SaveScore();
+
+        timeCounterScript.ResetTime();
+        // Játék vége esetén elmentjük az időt
+        //SaveTimeElapsed();
+    }
+
+    // Kilépéskor frissítjük a pontszámot
+    void OnApplicationQuit()
+    {
+        if (highscoreManagerScript != null)
+        {
+            int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+            highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
+        }
+
+        scoreScript.ResetScore();  // Mentjük a pontszámot
+        timeCounterScript.ResetTime();
+    }
+
+    void OnDestroy()
+    {
+        if (highscoreManagerScript != null)
+        {
+            int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+            highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
+        
+            ResetGameData();
+
+        // Ellenőrizd, hogy a scoreScript és a timeCounterScript nem null-e, mielőtt hívnád őket
+            if (scoreScript != null)
+            {
+                scoreScript.ResetScore();  // Mentjük a pontszámot
+            }
+
+            if (timeCounterScript != null)
+            {
+                timeCounterScript.ResetTime();  // Mentjük az időt
+            }
+        }
+    }   
+
+    public void ResetGameData()
+{
+    PlayerPrefs.DeleteKey("score");  // Törli a mentett pontszámot
+    PlayerPrefs.DeleteKey("SavedTime");  // Törli a mentett időt
+    PlayerPrefs.Save();  // Mentsük el a változtatásokat
+}
+
+
+    public void setLevelNumber(int LevelNumber){
+        levelNumber = LevelNumber;
+    }
+
+    public int getLevelNumber(){
+        return levelNumber;
+    }
+
+    // Szint leírásának megjelenítése
+    /*void DisplayLevelDescription(int levelIndex)
+    {
+        if (levelDescriptionText != null && levelDescriptionText.gameObject.activeSelf )
+        {
+            // Az adott szint leírásának keresése és megjelenítése
+            foreach (var level in levelList.levels)
+            {
+                if (level.level == levelIndex)
+                {
+                    levelDescriptionText.text = level.description;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("levelDescriptionText nem érvényes.");
+        }
+    }
+    */
+     // Play gomb kattintás eseménye
+    public void OnPlayButtonClick()
+    {
+        // Tüntessük el a szövegdobozt, amikor a Play gombra kattintanak
+        levelDescriptionText.gameObject.SetActive(false);
+        levelTitle.gameObject.SetActive(false);
+        
+        // A játékot elindítjuk itt
+        // GameManager state frissítés, stb.
+
+        // Játék újraindításakor visszaállítjuk az időt
+        RestoreTimeElapsed();
     }
 
     //Function to update the game manager state
@@ -80,6 +286,12 @@ public class GameManager : MonoBehaviour
             // Set play button visible (active)
             playButton.SetActive(true);
 
+            quitButton.SetActive(true);
+
+            levelDescriptionText.gameObject.SetActive(true);
+            levelTitle.gameObject.SetActive(true);
+
+            
             // Play background music
             if (backgroundMusic != null && !backgroundMusic.isPlaying)
                 backgroundMusic.Play();
@@ -87,14 +299,23 @@ public class GameManager : MonoBehaviour
             if (deathMusic != null && deathMusic.isPlaying)
                 deathMusic.Stop();
 
+            // Példa: Szint 1 leírásának megjelenítése
+            //DisplayLevelDescription(levelNumber);
+            //setLevelNumber(levelNumber +1);
+            //DisplayLevelDescription(getLevelNumber());
+
+            ShieldOnPlayer.SetActive(false);
+
             break;
 
         case GameManagerState.Gameplay:
             // Reset the score
-            scoreUITextGO.GetComponent<GameScore>().Score = 0;
+            //scoreUITextGO.GetComponent<GameScore>().Score = 0;
 
             // Hide play button on game play state
             playButton.SetActive(false);
+
+            quitButton.SetActive(false);
 
             // Hide the game title
             GameTitleGO.SetActive(false);
@@ -111,17 +332,7 @@ public class GameManager : MonoBehaviour
             // Start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
 
-            // Initialize PlusHPSpawn script
-            /*if (PlusHPSpawnGO != null)
-            {
-                // Ensure PlusHPSpawn component is attached and set the reference
-                PlusHPSpawn plusHPSpawnScript = PlusHPSpawnGO.GetComponent<PlusHPSpawn>();
-                if (plusHPSpawnScript != null)
-                {
-                    // Start the timer
-                    plusHPSpawnScript.StartTimer();
-                }
-            }*/
+            ShieldOnPlayer.SetActive(false);
 
             // Initialize ShieldSpwan script
             if (ShieldSpawnGO != null)
@@ -147,9 +358,6 @@ public class GameManager : MonoBehaviour
                 }
             }
             
-            /*//hide shield 
-            ShieldOnPlayer.SetActive(false);*/
-            
 
             // Initialize PlusHPSpawn script
             if (PlusHPSpawnGO != null)
@@ -162,31 +370,7 @@ public class GameManager : MonoBehaviour
                     plusHPSpawnScript.StartTimer();
                 }
             }
-
-            /*// Initialize ShieldSpwan script
-            if (ShieldSpawnGO != null)
-            {
-                // Ensure ShieldSpawn component is attached and set the reference
-                ShieldSpawn ShieldSpawnScript = ShieldSpawnGO.GetComponent<ShieldSpawn>();
-                if (ShieldSpawnScript != null)
-                {
-                    // Start the timer
-                    ShieldSpawnScript.StartTimer();
-                }
-            }*/
-
-            /*// Initialize PowerShootSpawn script
-            if (PowerShootSpawnGO != null)
-            {
-                // Ensure PowerShootSpawn component is attached and set the reference
-                PowerShootSpawn PowerShootSpawnScript = PowerShootSpawnGO.GetComponent<PowerShootSpawn>();
-                if (PowerShootSpawnScript != null)
-                {
-                    // Start the timer
-                    PowerShootSpawnScript.StartTimer();
-                }
-            }*/
-            
+           
             //hide shield 
             ShieldOnPlayer.SetActive(false);
             
@@ -200,6 +384,10 @@ public class GameManager : MonoBehaviour
             break;
         
         case GameManagerState.GameOver:
+
+            OnGameOver();
+
+            ResetSavedTime();
 
             // Stop the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StopTimeCounter();
@@ -246,7 +434,8 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-
+            highscoreManagerScript.UpdateHighscore(ScoreTextGO.GetComponent<GameScore>().Score);
+            
             // Stop background music
             if (backgroundMusic != null && backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
@@ -260,6 +449,12 @@ public class GameManager : MonoBehaviour
 
             break;
         }
+    }
+
+    public void ResetSavedTime()
+    {
+        PlayerPrefs.DeleteKey("SavedTime");
+        PlayerPrefs.Save();
     }
 
     //Function to set the game manager state
@@ -276,14 +471,22 @@ public class GameManager : MonoBehaviour
         GMState = GameManagerState.Gameplay;
         UpdateGameManagerState();
         // Ne hagyjuk, hogy a hajó villogjon, amikor újraindul a játék
-    playerShip.GetComponent<PlayerControl>().StopFlashing();  // Leállítjuk a villogást a PlayerControl scriptben
-    playerShip.GetComponent<PlayerControl>().ResetVisibility();  // Biztosítjuk, hogy a hajó látható legyen
+        playerShip.GetComponent<PlayerControl>().StopFlashing();  // Leállítjuk a villogást a PlayerControl scriptben
+        playerShip.GetComponent<PlayerControl>().ResetVisibility();  // Biztosítjuk, hogy a hajó látható legyen
+
+        // Betöltjük a szint leírását újra
+        LoadLevelDescriptions();  
+
+        
     }
 
     //Function to change manager state to opening state
     public void ChangeToOpeningState()
     {
         SetGameManagerState(GameManagerState.Opening);
+
+        // Betöltjük a szint leírását újra
+        LoadLevelDescriptions();  
     }
     // Call this method when the player picks up the shield
     public void ActivateShield()
@@ -292,6 +495,8 @@ public class GameManager : MonoBehaviour
         {
             ShieldOnPlayer.SetActive(true);  // Activate the shield
             shieldtimer = shieldduration;   // Reset the shield timer
+
+            isShieldActive = true;
         }
     }
 
@@ -306,6 +511,7 @@ public class GameManager : MonoBehaviour
             if (shieldtimer <= 0f)
             {
                 ShieldOnPlayer.SetActive(false);
+                isShieldActive = false;
             }
         }
         else if (ShieldOnPlayer == null)
@@ -316,22 +522,9 @@ public class GameManager : MonoBehaviour
      
     }
 
-    bool IsShieldActive()
+    public void QuitGame()
     {
-        return ShieldOnPlayer != null && ShieldOnPlayer.activeSelf;
-    }
-
-    void Updates()
-    {
-        if (IsShieldActive())
-        {
-            shieldtimer -= Time.deltaTime;
-
-            if (shieldtimer <= 0f)
-            {
-                ShieldOnPlayer.SetActive(false);
-            }
-        }
+        Application.Quit();
     }
 
 
