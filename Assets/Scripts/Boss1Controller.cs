@@ -12,7 +12,8 @@ public class Boss1Controller : MonoBehaviour
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
     public GameObject ExplosionGO;            //explosion prefab
-    private bool isDead = false;
+    public delegate void Boss1DestroyedEvent();
+    public static event Boss1DestroyedEvent OnBoss1Destroyed;
 
     void Start()
     {
@@ -71,8 +72,8 @@ public class Boss1Controller : MonoBehaviour
             // Ha az élet 0, elpusztítjuk a boss1-et
             if (Lives <= 0)
             {
+                OnBoss1Destroyed?.Invoke(); // Esemény indítása
                 Destroy(gameObject);
-                isDead = true;
             }
 
             // Elpusztítjuk a játékos lövedékét (ha az találta el)
@@ -90,10 +91,53 @@ public class Boss1Controller : MonoBehaviour
         explosion.transform.position = transform.position;
     }
 
-    public bool IsDead()
-    {
-        return isDead;
-    }
 
 }
+/*using UnityEngine;
 
+public class Boss1Controller : MonoBehaviour
+{
+    public float speed = 0f;
+    public int Lives = 12;
+    public GameObject ExplosionGO;
+
+    public delegate void Boss1DestroyedEvent();
+    public static event Boss1DestroyedEvent OnBoss1Destroyed;
+
+    void Update()
+    {
+        Move();
+    }
+
+    void Move()
+    {
+        // Mozgás jobbra-balra
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        if (transform.position.x > 4.5f || transform.position.x < -4.5f)
+            speed = -speed; // Irányváltás
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("PlayerBulletTag01") || col.CompareTag("PlayerBulletTag02"))
+        {
+            Lives--;
+
+            PlayExplosion();
+
+            if (Lives <= 0)
+            {
+                OnBoss1Destroyed?.Invoke(); // Esemény indítása
+                Destroy(gameObject);
+            }
+
+            Destroy(col.gameObject);
+        }
+    }
+
+    void PlayExplosion()
+    {
+        Instantiate(ExplosionGO, transform.position, Quaternion.identity);
+    }
+}
+*/

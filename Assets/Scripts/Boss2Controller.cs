@@ -5,13 +5,15 @@ using UnityEngine;
 public class Boss2Controller : MonoBehaviour
 {
     public float speed = 0f;                   // Főgonosz sebessége
-    public int Lives = 12;                    // Boss1 élete
+    public int Lives = 20;                    // Boss2 élete
     public GameObject bulletPrefab;           // Lövedék prefabja
     public Transform bulletSpawnPoint;        // Lövedék kilövési pozíciója
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
     public GameObject ExplosionGO;            //explosion prefab
+    public delegate void Boss2DestroyedEvent();
+    public static event Boss2DestroyedEvent OnBoss2Destroyed;
 
     void Start()
     {
@@ -71,6 +73,7 @@ public class Boss2Controller : MonoBehaviour
             // Ha az élet 0, elpusztítjuk a boss2-et
             if (Lives == 0)
             {
+                OnBoss2Destroyed?.Invoke(); // Esemény indítása
                 Destroy(gameObject);
             }
 

@@ -1,28 +1,28 @@
 using UnityEngine;
 
-public class FinishPoint1SpawnerGO : MonoBehaviour
+public class FinishPoint2SpawnerGO : MonoBehaviour
 {
-    public GameObject FinishPoint1GO; // Finish Point prefab
+    public GameObject FinishPoint2GO; // Finish Point prefab
 
     private bool finishPointSpawned = false;
 
     void OnEnable()
     {
         // Feliratkozás az eseményre
-        Boss1Controller.OnBoss1Destroyed += SpawnFinishPoint1;
+        Boss2Controller.OnBoss2Destroyed += SpawnFinishPoint2;
     }
 
     void OnDisable()
     {
         // Leiratkozás az eseményről
-        Boss1Controller.OnBoss1Destroyed -= SpawnFinishPoint1;
+        Boss2Controller.OnBoss2Destroyed -= SpawnFinishPoint2;
     }
 
-    void SpawnFinishPoint1()
+    void SpawnFinishPoint2()
     {
         if (!finishPointSpawned) // Ellenőrizzük, hogy már megjelent-e
         {
-            Instantiate(FinishPoint1GO, new Vector3(0, 0, 0), Quaternion.identity);
+            Instantiate(FinishPoint2GO, new Vector3(0, 0, 0), Quaternion.identity);
             finishPointSpawned = true;
             Debug.Log("Finish Point spawned!");
         }

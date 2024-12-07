@@ -9,8 +9,8 @@ public class ShieldControl : MonoBehaviour
     // Reference to the PlayerControl script
     public GameObject playerShip;  // Drag the player ship GameObject in the inspector
     public GameObject ShieldOnPlayer; // Reference to the player's shield
-    private float shieldduration = 15f;
-    private float shieldtimer;
+    //private float shieldduration = 15f;
+    //private float shieldtimer;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +43,7 @@ public class ShieldControl : MonoBehaviour
 
         }
         
-        
+        /*
         // If the shield is active, start counting down the timer
         if (ShieldOnPlayer.activeSelf && ShieldOnPlayer != null) 
         {
@@ -52,7 +52,7 @@ public class ShieldControl : MonoBehaviour
             {
                 DeactivateShield(); // Deactivate shield after the duration
             }
-        }
+        }*/
     }
 
      void OnTriggerEnter2D(Collider2D col)
@@ -65,7 +65,7 @@ public class ShieldControl : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+    /*
     // Deactivates the shield after the specified duration
     void DeactivateShield()
     {
@@ -74,5 +74,5 @@ public class ShieldControl : MonoBehaviour
             ShieldOnPlayer.SetActive(false);  // Deactivate the shield
             shieldtimer = shieldduration; // Reset the shield timer
         }
-    }
+    }*/
 }

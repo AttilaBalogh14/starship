@@ -63,7 +63,6 @@ public class BossBullet : MonoBehaviour
         // Ha a lövedék a játékos hajójával ütközik
         if (col.CompareTag("PlayerShipTag"))
         {
-            // A játékos hajóját érintette, itt elhelyezhetjük a sebzés logikát is
             Destroy(gameObject);  // A lövedék eltűnik
 
         }

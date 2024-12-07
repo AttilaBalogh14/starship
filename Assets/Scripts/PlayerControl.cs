@@ -185,13 +185,16 @@ public class PlayerControl : MonoBehaviour
         transform.position = pos;
     }
 
+
+
+
    void OnTriggerEnter2D(Collider2D col)
 {
     // Ha a pajzs aktív, akkor eltávolítjuk az ellenséges objektumot, de nem vonunk le életet
     if (ShieldOnPlayer.activeSelf)
     {
         if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") 
-        || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2BulletTag"))
+        || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2BulletTag") || (col.tag == "Boss3BulletTag"))
         {
             Destroy(col.gameObject); // Töröljük az ütköző objektumot (pl. ellenséges golyó, aszteroida)
             return; // Ne folytassuk tovább a kódot, ha a pajzs aktív, mivel nem kell életet vonni
@@ -199,7 +202,8 @@ public class PlayerControl : MonoBehaviour
     }
     // Ha a pajzs nem aktív, akkor le kell vonni életet, ha az ütközés ellenséggel vagy golyóval történt
     if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") 
-    || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2ShipTag") || (col.tag == "Boss2BulletTag"))
+    || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2ShipTag") || (col.tag == "Boss2BulletTag")
+    || (col.tag == "Boss3ShipTag") || (col.tag == "Boss3BulletTag"))
     {
         //PlayExplosion(); // Játékos robbanása
         
