@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public GameObject quitButton;
     public GameObject playerShip;
     public GameObject enemySpawner; //reference to our enemy spawner
+    //public GameObject Boss1SpawnerGO;//reference to our boss1 spawner
+    //public GameObject Boss2SpawnerGO;//reference to our boss2 spawner
+    //public GameObject Boss3SpawnerGO;//reference to our boss3 spawner
     public GameObject asteroidSpawner; //reference to our asteroid spawner
     public GameObject GameOverGO; //reference to the game over image
     public GameObject scoreUITextGO; //reference to the score text UI game object
@@ -326,8 +329,11 @@ public class GameManager : MonoBehaviour
             // Start enemy spawner
             enemySpawner.GetComponent<EnemySpawner>().ScheduleEnemySpawner();
 
-            // Start asteroid spawner
-            asteroidSpawner.GetComponent<AsteroidSpawner>().ScheduleAsteroidSpawner();
+            //start asteroid spawner
+            asteroidSpawner.GetComponent<AsteroidSpawner>().ScheduleAsteroidSpawner();  
+            
+            //start boss1 spawner
+            //Boss1SpawnerGO.GetComponent<Boss1SpawnerGO>().ScheduleBoss1Spawner();
 
             // Start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
@@ -394,7 +400,14 @@ public class GameManager : MonoBehaviour
 
             // Stop enemy spawner
             enemySpawner.GetComponent<EnemySpawner>().UnscheduleEnemySpawner();
-            // Stop asteroid spawner
+            //stop boss1 spawner
+            //Boss1SpawnerGO.GetComponent<Boss1SpawnerGO>().UnscheduleBoss1Spawner();
+            // Boss1SpawnerGO.GetComponent<Boss1SpawnerGO>().DestroyActiveBoss1();
+            //Boss2SpawnerGO.GetComponent<Boss2SpawnerGO>().UnscheduleBoss2Spawner();
+            // Boss2SpawnerGO.GetComponent<Boss2SpawnerGO>().DestroyActiveBoss2();
+            //Boss3SpawnerGO.GetComponent<Boss3SpawnerGO>().UnscheduleBoss3Spawner();
+            // Boss3SpawnerGO.GetComponent<Boss3SpawnerGO>().DestroyActiveBoss3();
+            //stop asteroid spawner
             asteroidSpawner.GetComponent<AsteroidSpawner>().UnscheduleAsteroidSpawner();
 
             // Display game over
