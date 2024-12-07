@@ -69,7 +69,7 @@ public class Boss2Controller : MonoBehaviour
             }
 
             // Ha az élet 0, elpusztítjuk a boss2-et
-            if (Lives <= 0)
+            if (Lives == 0)
             {
                 Destroy(gameObject);
             }

@@ -190,42 +190,16 @@ public class PlayerControl : MonoBehaviour
     // Ha a pajzs aktív, akkor eltávolítjuk az ellenséges objektumot, de nem vonunk le életet
     if (ShieldOnPlayer.activeSelf)
     {
-        if (col.tag == "EnemyBulletTag" || col.tag == "EnemyShipTag" || col.tag == "AsteroidTag")
+        if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") 
+        || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2BulletTag"))
         {
             Destroy(col.gameObject); // Töröljük az ütköző objektumot (pl. ellenséges golyó, aszteroida)
             return; // Ne folytassuk tovább a kódot, ha a pajzs aktív, mivel nem kell életet vonni
         }
     }
-
-    //detect collision of the player ship with an enemy ship, or with an enemy bullet, or with an asteroid
-    if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag"))
-        {
-            // Subtract one life
-            Lives--;
-            LivesUIText.text = Lives.ToString(); // update lives UI text
-
-            // Trigger explosion effect
-            PlayExplosion();
-
-            if (Lives <= 0) //if our player is dead
-            {
-                //change game manager state to game over state
-                GameManagerGO.GetComponent<GameManager>().SetGameManagerState(GameManager.GameManagerState.GameOver);
-
-                //hide the player's ship
-                gameObject.SetActive(false);
-            }
-
-            /*// Destroy the boss bullet or handle collision effects
-            if (col.CompareTag("Boss1BulletTag") || col.CompareTag("Boss1ShipTag"))
-            {
-                Destroy(col.gameObject); // Remove the bullet or boss (if needed)
-            }*/
-        }
-
-
     // Ha a pajzs nem aktív, akkor le kell vonni életet, ha az ütközés ellenséggel vagy golyóval történt
-    if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag"))
+    if ((col.tag == "EnemyShipTag") || (col.tag == "EnemyBulletTag") || (col.tag == "AsteroidTag") 
+    || (col.tag == "Boss1ShipTag") || (col.tag == "Boss1BulletTag") || (col.tag == "Boss2ShipTag") || (col.tag == "Boss2BulletTag"))
     {
         //PlayExplosion(); // Játékos robbanása
         

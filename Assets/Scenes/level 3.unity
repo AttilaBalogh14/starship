@@ -199,52 +199,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bccd58f6246cda4ba11fa4ebfa67298, type: 3}
---- !u!1 &175333241
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 175333243}
-  - component: {fileID: 175333244}
-  m_Layer: 0
-  m_Name: Boss1SpawnerGO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &175333243
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175333241}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &175333244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175333241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b828c1676b5c0464c96851e0cc1a45f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boss1GO: {fileID: 5088480864357973031, guid: 444ba6c2d6d74504cb541cb720a1bad0, type: 3}
-  spawnScore: 100
 --- !u!1 &187222492 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6748294023427128904, guid: 8bccd58f6246cda4ba11fa4ebfa67298, type: 3}
@@ -305,7 +259,7 @@ MonoBehaviour:
   GameTitleGO: {fileID: 463552501}
   backgroundMusic: {fileID: 1295440248}
   deathMusic: {fileID: 2132754089}
-  PlusHPSpawnGO: {fileID: 823670485}
+  PlusHPSpawnGO: {fileID: 0}
   ShieldSpawnGO: {fileID: 1133355097}
   PowerShootSpawnGO: {fileID: 1823093200}
   ShieldOnPlayer: {fileID: 1253716756}
@@ -1156,52 +1110,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &648991175
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 648991177}
-  - component: {fileID: 648991176}
-  m_Layer: 0
-  m_Name: Boss2SpawnerGO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &648991176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648991175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f72871abdb6b334eb5a57effc28eb47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boss2GO: {fileID: 7250957786839938043, guid: d70b9555806f4a94cad3808fc99b7b71, type: 3}
-  spawnScore: 300
---- !u!4 &648991177
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648991175}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.2720075, y: -2.0421247, z: 0.014333241}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &872323870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,7 +1455,6 @@ Transform:
   - {fileID: 576075717}
   - {fileID: 1269931374}
   - {fileID: 568388616}
-  - {fileID: 1371457148}
   - {fileID: 1348536144}
   - {fileID: 1452116297}
   - {fileID: 1921589030}
@@ -1575,7 +1482,7 @@ MonoBehaviour:
   bulletPosition03: {fileID: 1348536143}
   bulletPosition04: {fileID: 1452116296}
   extra_part01: {fileID: 568388614}
-  extra_part02: {fileID: 1371457146}
+  extra_part02: {fileID: 0}
   ExplosionGO: {fileID: 9177448264465024892, guid: 6fdb1c39868e6094ba5ac8eac0c151a9, type: 3}
   LivesUIText: {fileID: 1363852842}
   powerShootActiveTime: 15
@@ -1584,7 +1491,7 @@ MonoBehaviour:
   flashDuration: 2
   playerSpriteRenderer: {fileID: 1119788982}
   Extra_Part01SpriteRenderer: {fileID: 568388615}
-  Extra_Part02SpriteRenderer: {fileID: 1371457147}
+  Extra_Part02SpriteRenderer: {fileID: 0}
   shootAudio: {fileID: 484304402}
   getdemageAudio: {fileID: 1236063369}
 --- !u!50 &1119788985
@@ -3184,6 +3091,10 @@ SceneRoots:
   - {fileID: 2092855124}
   - {fileID: 463552503}
   - {fileID: 1295440249}
-  - {fileID: 175333243}
-  - {fileID: 648991177}
   - {fileID: 1388182876}
+  - {fileID: 471758827}
+  - {fileID: 484304403}
+  - {fileID: 1133355099}
+  - {fileID: 1236063370}
+  - {fileID: 1823093202}
+  - {fileID: 2132754090}

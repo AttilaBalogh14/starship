@@ -5,7 +5,6 @@ using UnityEngine;
 public class Boss1Controller : MonoBehaviour
 {
     public float speed = 0f;                   // Főgonosz sebessége
-    public float shootingInterval = 2f;       // Lövések közötti időköz
     public int Lives = 12;                    // Boss1 élete
     public GameObject bulletPrefab;           // Lövedék prefabja
     public Transform bulletSpawnPoint;        // Lövedék kilövési pozíciója
@@ -13,6 +12,7 @@ public class Boss1Controller : MonoBehaviour
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
     public GameObject ExplosionGO;            //explosion prefab
+    private bool isDead = false;
 
     void Start()
     {
@@ -26,7 +26,6 @@ public class Boss1Controller : MonoBehaviour
     void Update()
     {
         Move();
-        // A lövés logika kiegészíthető itt
     }
 
     // Főgonosz jobbra-balra mozgatása
@@ -73,6 +72,7 @@ public class Boss1Controller : MonoBehaviour
             if (Lives <= 0)
             {
                 Destroy(gameObject);
+                isDead = true;
             }
 
             // Elpusztítjuk a játékos lövedékét (ha az találta el)
@@ -88,6 +88,11 @@ public class Boss1Controller : MonoBehaviour
 
         //set the position of the explosion
         explosion.transform.position = transform.position;
+    }
+
+    public bool IsDead()
+    {
+        return isDead;
     }
 
 }

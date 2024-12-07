@@ -19,6 +19,7 @@ TagManager:
   - Boss1ShipTag
   - Boss1BulletTag
   - Boss2ShipTag
+  - Boss2BulletTag
   layers:
   - Default
   - TransparentFX

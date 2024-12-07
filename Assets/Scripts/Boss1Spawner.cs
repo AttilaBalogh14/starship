@@ -8,6 +8,7 @@ public class Boss1SpawnerGO : MonoBehaviour
 {
     public GameObject boss1GO;    // Húzd ide a boss1GO prefabot
     public int spawnScore = 100;   // A pontszám, amelynél a boss megjelenik
+    
 
     private bool hasSpawned = false; // Ellenőrzi, hogy a boss megjelent-e már
     private GameScore gameScore;    // Hivatkozás a GameScore scriptre
@@ -42,6 +43,7 @@ public class Boss1SpawnerGO : MonoBehaviour
         spawnPosition.x += 0.8f; // X tengelyen jobbra mozgatjuk
         spawnPosition.y -= 0.8f; // Y tengelyen lefelé mozgatjuk
         Instantiate(boss1GO, spawnPosition, Quaternion.identity);
+    
 
         hasSpawned = true; // Csak egyszer jelenik meg
         Debug.Log("Boss spawned at: " + spawnPosition);
@@ -56,7 +58,11 @@ public class Boss1SpawnerGO : MonoBehaviour
         return topLeft;
     }
 
-    
+public bool HasSpawned()
+{
+    return hasSpawned;
+}
+
     /*public void ScheduleBoss1Spawner()
     {
         spawnScore = 100;
