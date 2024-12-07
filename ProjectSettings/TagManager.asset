@@ -16,6 +16,9 @@ TagManager:
   - ShiledTag
   - ShieldOnPlayerTag
   - PowerShootTag
+  - Boss1ShipTag
+  - Boss1BulletTag
+  - Boss2ShipTag
   layers:
   - Default
   - TransparentFX
