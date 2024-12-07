@@ -33,7 +33,7 @@ public class ShieldSpawn : MonoBehaviour
         {
             hasSpawned = true; // Beállítjuk, hogy már spawnoltunk
             SpawnShield(); // Létrehozzuk a PlusHP objektumot
-            nextspawntime = Random.Range(5, 10);
+            nextspawntime = Random.Range(60, 75);
             spawnTimer = 0f;
         }
     }
@@ -65,7 +65,7 @@ public class ShieldSpawn : MonoBehaviour
     public void StartTimer()
     {
         gameStarted = true; // Beállítjuk, hogy a játék elindult
-        nextspawntime = Random.Range(5f, 10f); // Az első spawn időpontját beállítjuk
+        nextspawntime = Random.Range(60f, 75f); // Az első spawn időpontját beállítjuk
     }
 
     public void StopTimer()
