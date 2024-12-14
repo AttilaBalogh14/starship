@@ -72,7 +72,7 @@ public bool HasSpawned()
     public void UnscheduleBoss1Spawner()
     {
         hasSpawned = true; // Eltávolítjuk a spawner-t
-    }
+    }*/
 
     public void DestroyActiveBoss1()
 {
@@ -80,5 +80,6 @@ public bool HasSpawned()
     if (activeBoss1 != null)
     {
         Destroy(activeBoss1);
-    }*/
+    }
+}
 }

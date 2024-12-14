@@ -59,7 +59,7 @@ public class Boss3SpawnerGO : MonoBehaviour
    /* public void UnscheduleBoss3Spawner()
     {
         hasSpawned = true; // Eltávolítjuk a spawner-t
-    }
+    }*/
 
     public void DestroyActiveBoss3()
 {
@@ -67,8 +67,8 @@ public class Boss3SpawnerGO : MonoBehaviour
     if (activeBoss3 != null)
     {
         Destroy(activeBoss3);
-    }*/
+    }
 }
-
+}
 
 
