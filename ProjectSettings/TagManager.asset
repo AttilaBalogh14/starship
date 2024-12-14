@@ -22,6 +22,8 @@ TagManager:
   - Boss2BulletTag
   - Boss3BulletTag
   - Boss3ShipTag
+  - FinishPoint1Tag
+  - FinishPoint2Tag
   layers:
   - Default
   - TransparentFX

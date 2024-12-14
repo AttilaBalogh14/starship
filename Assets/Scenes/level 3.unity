@@ -297,6 +297,9 @@ MonoBehaviour:
   quitButton: {fileID: 1041160236}
   playerShip: {fileID: 1119788980}
   enemySpawner: {fileID: 496860200}
+  Boss1SpawnerGO: {fileID: 1628118622}
+  Boss2SpawnerGO: {fileID: 1990131486}
+  Boss3SpawnerGO: {fileID: 1388182874}
   asteroidSpawner: {fileID: 596959212}
   GameOverGO: {fileID: 1228836742}
   scoreUITextGO: {fileID: 1297541291}
@@ -3018,6 +3021,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1119788983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1628118622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1628118624}
+  - component: {fileID: 1628118623}
+  m_Layer: 0
+  m_Name: Boss1SpawnerGO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1628118623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628118622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b828c1676b5c0464c96851e0cc1a45f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss1GO: {fileID: 5088480864357973031, guid: 444ba6c2d6d74504cb541cb720a1bad0, type: 3}
+  spawnScore: 1000
+--- !u!4 &1628118624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628118622}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1671085025
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3758,6 +3807,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962928295}
   m_CullTransparentMesh: 1
+--- !u!1 &1990131486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1990131488}
+  - component: {fileID: 1990131487}
+  m_Layer: 0
+  m_Name: Boss2SpawnerGO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1990131487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990131486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f72871abdb6b334eb5a57effc28eb47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss2GO: {fileID: 7250957786839938043, guid: d70b9555806f4a94cad3808fc99b7b71, type: 3}
+  spawnScore: 1500
+--- !u!4 &1990131488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990131486}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.2720075, y: -2.0421247, z: 0.014333241}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092855122
 GameObject:
   m_ObjectHideFlags: 0
@@ -3963,3 +4058,5 @@ SceneRoots:
   - {fileID: 673929606}
   - {fileID: 823670487}
   - {fileID: 21019319}
+  - {fileID: 1990131488}
+  - {fileID: 1628118624}

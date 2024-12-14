@@ -27,4 +27,14 @@ public class FinishPoint2SpawnerGO : MonoBehaviour
             Debug.Log("Finish Point spawned!");
         }
     }
+
+   public void DestroyActiveFinishPoint2()
+    {
+    GameObject activeFinishPoint2 = GameObject.FindGameObjectWithTag("FinishPoint2Tag");
+    if (activeFinishPoint2 != null)
+    {
+        Destroy(activeFinishPoint2);
+    }
+}
+
 }
