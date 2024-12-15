@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
+    
 
     float speed; //the bullet speed
     Vector2 _direction; //the direction of the bullet
