@@ -300,6 +300,8 @@ MonoBehaviour:
   Boss1SpawnerGO: {fileID: 1628118622}
   Boss2SpawnerGO: {fileID: 1990131486}
   Boss3SpawnerGO: {fileID: 1388182874}
+  FinishPoint1SpawnerGO: {fileID: 0}
+  FinishPoint2SpawnerGO: {fileID: 0}
   asteroidSpawner: {fileID: 596959212}
   GameOverGO: {fileID: 1228836742}
   scoreUITextGO: {fileID: 1297541291}
