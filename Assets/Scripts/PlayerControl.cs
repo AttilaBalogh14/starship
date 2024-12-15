@@ -160,7 +160,7 @@ public class PlayerControl : MonoBehaviour
 
     }
 
-    void Move(Vector2 direction){
+    public void Move(Vector2 direction){
         //find the screen limits to the players movement (left, right, top and bottom edges of the screen)
         Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0,0)); // this is the bottom-left point corner of the screen
         Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(1,1)); // this is the top-right point corner of the screen
