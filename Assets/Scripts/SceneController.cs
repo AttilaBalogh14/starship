@@ -7,6 +7,10 @@ public class SceneController : MonoBehaviour {
 
     public static void LoadScene(int sceneIndex)
     {
+        // Mentsd el a pontszámot és az időt az aktuális szint előtt
+        GameScore.Instance.SaveScore();
+        TimeCounter.Instance.SaveTime();
+
         SceneManager.LoadScene(sceneIndex);
 
         //GameScore.Instance.SaveScore();  // Hívd meg a GameManager SaveScore metódust
@@ -16,12 +20,12 @@ public class SceneController : MonoBehaviour {
     
     public static void NextLevel()
     {
-        // Mentjük el a pontszámot a következő szint előtt
-        //GameScore.Instance.SaveScore();  // Ha menteni szeretnéd
-        //TimeCounter.Instance.SaveTime(); // Elmentjük az időt is
-
+        // Mentsd el a pontszámot és az időt az aktuális szint előtt
+        GameScore.Instance.SaveScore();
+        TimeCounter.Instance.SaveTime();
 
         LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
     
 }

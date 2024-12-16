@@ -35,7 +35,6 @@ public class GameScore : MonoBehaviour
         {
             Destroy(gameObject);  // Ha már létezik, töröld az új példányt
         }
-        LoadScore();
     }
 
     // Start is called before the first frame update
@@ -43,7 +42,6 @@ public class GameScore : MonoBehaviour
     {
         //get the text ui component of this GameObject
         scoreTextUI = GetComponent<Text>();
-        LoadScore();  // Betöltjük a mentett pontszámot
     }
 
     
@@ -57,30 +55,13 @@ public class GameScore : MonoBehaviour
 
     public void SaveScore()
     {
-        // Mentjük a pontszámot
-        PlayerPrefs.SetInt("score", score);  // "Highscore" a kulcs, score a mentett adat
-        PlayerPrefs.Save();  // Mentés
+        PlayerPrefs.SetInt("SavedScore", score);  // Mentés
     }
 
     public void LoadScore()
     {
-        // Betöltjük a pontszámot (ha létezik)
-        if (PlayerPrefs.HasKey("score"))
-        {
-            score = PlayerPrefs.GetInt("score");  // Betöltjük a mentett pontszámot
-        }
-        else
-        {
-            score = 0;  // Ha nincs mentett pontszám, akkor 0
-        }
-
-        UpdateScoreTextUi();  // UI frissítése
-    }
-
-    public void OnLevelComplete()
-    {
-        // A pontszám mentése a szint végén
-        SaveScore();
+        score = PlayerPrefs.GetInt("SavedScore", 0);  // Betöltés, alapértelmezett 0
+        UpdateScoreTextUi();
     }
 
     // Pontszám nullázása

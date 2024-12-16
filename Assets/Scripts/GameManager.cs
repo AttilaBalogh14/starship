@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Ne felejts el hivatkozni a UI-ra
 using System.IO; // Hozzáadva, hogy elérhesd a Path osztályt
-using TMPro; // TextMeshPro namespace
+using TMPro;
+using UnityEngine.SceneManagement; // TextMeshPro namespace
 
 
 public class GameManager : MonoBehaviour
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     public GameObject TimeCounterGO; //reference to the time counter game object
     private TimeCounter timeCounterScript;
     public GameObject GameTitleGO; // reference to the GameTitleGO
+    private SceneController sceneControllerScript;
 
     private HighscoreManager highscoreManagerScript;
     GameObject ScoreTextGO;
@@ -153,22 +155,14 @@ public class GameManager : MonoBehaviour
         // Inicializáljuk a TimeCounter scriptet
         timeCounterScript = TimeCounterGO.GetComponent<TimeCounter>();
 
+        sceneControllerScript = FindAnyObjectByType<SceneController>();
+
+        // Betölti a mentett adatokat
+        GameScore.Instance.LoadScore();
+        TimeCounter.Instance.LoadTime();
 
 
-    }
 
-    // Játék újrakezdése vagy szintváltás előtt elmentjük az időt
-    public void SaveTimeElapsed()
-    {
-        timeCounterScript.SaveTime(); // Elmentjük az időt
-    }
-
-    // A játék kezdése előtt visszaállítjuk az időt
-    public void RestoreTimeElapsed()
-    {
-        // Restore the time when transitioning to the next level
-        timeCounterScript.RestoreTime(); // Restore the time
-        timeCounterScript.StartTimeCounter(); // Start the counter again
     }
 
     // Game over event
@@ -179,58 +173,15 @@ public class GameManager : MonoBehaviour
 
         // Egyéb logikák a játék vége után (pl. játékos elpusztulása, UI frissítése)
 
-        // A pontszám nullázása, ha meghalsz
-        scoreScript.ResetScore();
-        // Itt menthetjük a legmagasabb pontot (ha szükséges)
-        //scoreScript.SaveScore();
+        // Nullázzuk a pontszámot és az időt a játék végén
+        GameScore.Instance.ResetScore();
+        TimeCounter.Instance.ResetTime(); 
 
-        timeCounterScript.ResetTime();
-        // Játék vége esetén elmentjük az időt
-        //SaveTimeElapsed();
+        // Töröljük a mentett adatokat, amikor a játékos meghal
+        ClearSavedData();
+
+
     }
-
-    // Kilépéskor frissítjük a pontszámot
-    void OnApplicationQuit()
-    {
-        if (highscoreManagerScript != null)
-        {
-            int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
-            highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
-        }
-
-        scoreScript.ResetScore();  // Mentjük a pontszámot
-        timeCounterScript.ResetTime();
-    }
-
-    void OnDestroy()
-    {
-        if (highscoreManagerScript != null)
-        {
-            int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
-            highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
-        
-            ResetGameData();
-
-        // Ellenőrizd, hogy a scoreScript és a timeCounterScript nem null-e, mielőtt hívnád őket
-            if (scoreScript != null)
-            {
-                scoreScript.ResetScore();  // Mentjük a pontszámot
-            }
-
-            if (timeCounterScript != null)
-            {
-                timeCounterScript.ResetTime();  // Mentjük az időt
-            }
-        }
-    }   
-
-    public void ResetGameData()
-{
-    PlayerPrefs.DeleteKey("score");  // Törli a mentett pontszámot
-    PlayerPrefs.DeleteKey("SavedTime");  // Törli a mentett időt
-    PlayerPrefs.Save();  // Mentsük el a változtatásokat
-}
-
 
     public void setLevelNumber(int LevelNumber){
         levelNumber = LevelNumber;
@@ -272,7 +223,6 @@ public class GameManager : MonoBehaviour
         // GameManager state frissítés, stb.
 
         // Játék újraindításakor visszaállítjuk az időt
-        RestoreTimeElapsed();
     }
 
     //Function to update the game manager state
@@ -395,7 +345,6 @@ public class GameManager : MonoBehaviour
 
             OnGameOver();
 
-            ResetSavedTime();
 
             // Stop the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StopTimeCounter();
@@ -469,11 +418,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetSavedTime()
-    {
-        PlayerPrefs.DeleteKey("SavedTime");
-        PlayerPrefs.Save();
-    }
 
     //Function to set the game manager state
     public void SetGameManagerState(GameManagerState state)
@@ -494,6 +438,9 @@ public class GameManager : MonoBehaviour
 
         // Betöltjük a szint leírását újra
         LoadLevelDescriptions();  
+
+        // Töröljük a mentett adatokat új játék kezdésekor
+        ClearSavedData();
 
         
     }
@@ -542,8 +489,34 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        GameScore.Instance.ResetScore();
+        TimeCounter.Instance.ResetTime();
+
+        // Töröljük a mentett adatokat, amikor a játékos kilép
+        ClearSavedData();
+
+        int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+        highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
+
         Application.Quit();
     }
 
+    public void ClearSavedData()
+    {
+        PlayerPrefs.DeleteKey("SavedScore"); // A pontszám törlése
+        PlayerPrefs.DeleteKey("SavedTime");  // Az idő törlése
+    }
+
+    // Ez a függvény fogja betölteni a főmenü jelenetet
+    public void GoToMainMenu()
+    {
+        // A "MainMenu" nevű jelenetet betölti
+        SceneManager.LoadScene("Main Menu");
+        GameScore.Instance.ResetScore();
+        TimeCounter.Instance.ResetTime();
+
+        int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+        highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
+    }
 
     }
