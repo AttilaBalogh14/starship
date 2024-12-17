@@ -54,6 +54,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI levelDescriptionText;  // UI szöveg, amely megjeleníti a szint leírását
     public TextMeshProUGUI levelTitle;  // UI szöveg, amely megjeleníti a szint leírását
 
+    public GameObject pauseButton;   // Pause gomb referencia
+    public GameObject continueButton;  // Continue gomb referencia
+    private bool isPaused = false;  // A játék szünetel-e
+    int currentScore;
+    
     // JSON fájl beolvasása
     private string jsonFilePath = "level_descriptions.json"; // A JSON fájl elérési útja
 
@@ -125,6 +130,27 @@ public class GameManager : MonoBehaviour
             }
         }
 
+    // Ha szüneteltetjük a játékot
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;  // Megállítja a játékot
+        continueButton.SetActive(true);  // Mutatjuk a pause panelt
+        pauseButton.SetActive(false);   
+        isPaused = true;
+        backgroundMusic.Stop();
+    }
+
+    // Ha folytatjuk a játékot
+    public void ContinueGame()
+    {
+        Time.timeScale = 1f;  // Folytatódik a játék
+        continueButton.SetActive(false);  // Elrejtjük a pause panelt
+        pauseButton.SetActive(true);
+        isPaused = false;
+        backgroundMusic.Play();
+    }
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -168,7 +194,7 @@ public class GameManager : MonoBehaviour
     // Game over event
     public void OnGameOver()
     {
-        int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+        currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
         highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
 
         // Egyéb logikák a játék vége után (pl. játékos elpusztulása, UI frissítése)
@@ -274,6 +300,8 @@ public class GameManager : MonoBehaviour
 
             // Hide the game title
             GameTitleGO.SetActive(false);
+
+            pauseButton.SetActive(true);
 
             // Set the player visible (active) and init the player lives
             playerShip.GetComponent<PlayerControl>().Init();
@@ -484,6 +512,19 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("ShieldOnPlayer objektum meg lett semmisítve.");
             ShieldOnPlayer = null;
         }
+
+        // Pause gomb logika
+        if (Input.GetKeyDown(KeyCode.Escape))  // Például ha ESC-t nyomunk
+        {
+            if (isPaused)
+            {
+                ContinueGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
      
     }
 
@@ -495,7 +536,7 @@ public class GameManager : MonoBehaviour
         // Töröljük a mentett adatokat, amikor a játékos kilép
         ClearSavedData();
 
-        int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+        currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
         highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
 
         Application.Quit();
@@ -510,13 +551,19 @@ public class GameManager : MonoBehaviour
     // Ez a függvény fogja betölteni a főmenü jelenetet
     public void GoToMainMenu()
     {
+        if(isPaused){
+            ContinueGame();
+            currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+            highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
+        }
         // A "MainMenu" nevű jelenetet betölti
         SceneManager.LoadScene("Main Menu");
+
+        currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
+        highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
+
         GameScore.Instance.ResetScore();
         TimeCounter.Instance.ResetTime();
-
-        int currentScore = scoreScript.Score; // Az aktuális pontszám lekérése
-        highscoreManagerScript.UpdateHighscore(currentScore); // Frissítjük a legmagasabb pontszámot
     }
 
     }
