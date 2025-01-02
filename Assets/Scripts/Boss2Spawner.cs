@@ -7,7 +7,7 @@ using UnityEngine;
 public class Boss2SpawnerGO : MonoBehaviour
 {
     public GameObject boss2GO;    // Húzd ide a boss1GO prefabot
-    public int spawnScore = 1500;   // A pontszám, amelynél a boss megjelenik
+    public int spawnScore = 10000;   // A pontszám, amelynél a boss megjelenik
 
     private bool hasSpawned = false; // Ellenőrzi, hogy a boss megjelent-e már
     private GameScore gameScore;    // Hivatkozás a GameScore scriptre
@@ -63,10 +63,10 @@ public class Boss2SpawnerGO : MonoBehaviour
 
     public void DestroyActiveBoss2()
     {
-    GameObject activeBoss2 = GameObject.FindGameObjectWithTag("Boss2ShipTag");
-    if (activeBoss2 != null)
-    {
-        Destroy(activeBoss2);
+        GameObject activeBoss2 = GameObject.FindGameObjectWithTag("Boss2ShipTag");
+        if (activeBoss2 != null)
+        {
+            Destroy(activeBoss2);
+        }
     }
-}
 }

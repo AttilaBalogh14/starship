@@ -7,7 +7,7 @@ using UnityEngine;
 public class Boss3SpawnerGO : MonoBehaviour
 {
     public GameObject boss3GO;    // Húzd ide a boss3GO prefabot
-    public int spawnScore = 2000;   // A pontszám, amelynél a boss megjelenik
+    public int spawnScore = 20000;   // A pontszám, amelynél a boss megjelenik
 
     private bool hasSpawned = false; // Ellenőrzi, hogy a boss megjelent-e már
     private GameScore gameScore;    // Hivatkozás a GameScore scriptre
