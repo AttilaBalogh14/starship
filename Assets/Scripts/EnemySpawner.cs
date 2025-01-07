@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
         Invoke("SpawnEnemy", maxSpawnRateInSeconds);
 
         //increase spawn rate every 30 seconds
-        InvokeRepeating("IncreaseSpawnRate", 0f, 30f);
+        InvokeRepeating("IncreaseSpawnRate", 0f, 20f);
     }
     
 

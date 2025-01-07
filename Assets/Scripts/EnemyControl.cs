@@ -9,6 +9,7 @@ public class EnemyControl : MonoBehaviour
     public GameObject ExplosionGO; //this is our explosion prefab 
     float speed; //for the enemy speed
     private bool hasHit = false; // Flag to check if the enemy has already been hit
+    private GameManager gameManagerscript;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,8 @@ public class EnemyControl : MonoBehaviour
 
         //get the score text UI
         scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+
+        gameManagerscript = FindAnyObjectByType<GameManager>();
     }
 
     // Update is called once per frame
@@ -54,8 +57,10 @@ public class EnemyControl : MonoBehaviour
             {
                 PlayExplosion();
 
-                // Add 100 points to the score
-                scoreUITextGO.GetComponent<GameScore>().Score += 100;
+                if (gameManagerscript.isgameover == false ) {
+                    // Add 100 points to the score
+                    scoreUITextGO.GetComponent<GameScore>().Score += 100;
+                }
 
                 // Set the flag to true to prevent further score increases
                 hasHit = true;

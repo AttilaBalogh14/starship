@@ -56,8 +56,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject pauseButton;   // Pause gomb referencia
     public GameObject continueButton;  // Continue gomb referencia
+    public GameObject mainMenuButton;
     private bool isPaused = false;  // A játék szünetel-e
     int currentScore;
+    public bool isgameover;
     
     // JSON fájl beolvasása
     private string jsonFilePath = "level_descriptions.json"; // A JSON fájl elérési útja
@@ -138,6 +140,7 @@ public class GameManager : MonoBehaviour
         pauseButton.SetActive(false);   
         isPaused = true;
         backgroundMusic.Stop();
+        mainMenuButton.SetActive(true);
     }
 
     // Ha folytatjuk a játékot
@@ -148,6 +151,7 @@ public class GameManager : MonoBehaviour
         pauseButton.SetActive(true);
         isPaused = false;
         backgroundMusic.Play();
+        mainMenuButton.SetActive(false);
     }
     
 
@@ -205,6 +209,9 @@ public class GameManager : MonoBehaviour
 
         // Töröljük a mentett adatokat, amikor a játékos meghal
         ClearSavedData();
+
+        continueButton.SetActive(false);
+        pauseButton.SetActive(false);
 
 
     }
@@ -272,6 +279,8 @@ public class GameManager : MonoBehaviour
             levelDescriptionText.gameObject.SetActive(true);
             levelTitle.gameObject.SetActive(true);
 
+            isgameover = false;
+
             
             // Play background music
             if (backgroundMusic != null && !backgroundMusic.isPlaying)
@@ -302,6 +311,8 @@ public class GameManager : MonoBehaviour
             GameTitleGO.SetActive(false);
 
             pauseButton.SetActive(true);
+
+            isgameover = false;
 
             // Set the player visible (active) and init the player lives
             playerShip.GetComponent<PlayerControl>().Init();
@@ -372,6 +383,8 @@ public class GameManager : MonoBehaviour
         case GameManagerState.GameOver:
 
             OnGameOver();
+
+            isgameover = true;
 
 
             // Stop the time counter
