@@ -57,12 +57,6 @@ public class SoundOnOff : MonoBehaviour
     private bool isOn = false; 
     private bool isMuted;     // Némítás állapota
 
-    /*public AudioSource audioSource1; 
-    public AudioSource audioSource2; 
-    public AudioSource audioSource3; 
-    public AudioSource audioSource4; 
-    public AudioSource audioSource5; 
-    public AudioSource audioSource6;*
     // Start is called before the first frame update
     void Start()
     {
@@ -82,12 +76,6 @@ public class SoundOnOff : MonoBehaviour
         isOn = false; 
         isMuted = true;
         AudioListener.pause = isMuted;
-        /*audioSource1.mute = true; 
-        audioSource2.mute = true; 
-        audioSource3.mute = true; 
-        audioSource4.mute = true; 
-        audioSource5.mute = true; 
-        audioSource6.mute = true; *
 
 
        }
@@ -98,12 +86,6 @@ public class SoundOnOff : MonoBehaviour
         isOn = true; 
         isMuted = false;
         AudioListener.pause = isMuted;
-        /*audioSource1.mute = false; 
-        audioSource2.mute = false; 
-        audioSource3.mute = false; 
-        audioSource4.mute = false; 
-        audioSource5.mute = false; 
-        audioSource6.mute = false; *
     }
     }
 
