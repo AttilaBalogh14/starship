@@ -313,7 +313,13 @@ public class GameManager : MonoBehaviour
             asteroidSpawner.GetComponent<AsteroidSpawner>().ScheduleAsteroidSpawner();  
             
             //start boss1 spawner
-            //Boss1SpawnerGO.GetComponent<Boss1SpawnerGO>().ScheduleBoss1Spawner();
+            Boss1SpawnerGO.GetComponent<Boss1SpawnerGO>().ScheduleBoss1Spawner();
+
+            //start boss2 spawner
+            Boss2SpawnerGO.GetComponent<Boss2SpawnerGO>().ScheduleBoss2Spawner();
+
+            //start boss3 spawner
+            Boss3SpawnerGO.GetComponent<Boss3SpawnerGO>().ScheduleBoss3Spawner();
 
             // Start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();

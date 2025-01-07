@@ -63,13 +63,12 @@ public bool HasSpawned()
     return hasSpawned;
 }
 
-   /*public void ScheduleBoss1Spawner()
-    {
-        //spawnScore = newSpawnScore; // Új spawn pontszám beállítása
-        hasSpawned = false;         // Visszaállítjuk, hogy újra spawnolható legyen
-    }
+   public void ScheduleBoss1Spawner()
+{
+    hasSpawned = false; // Reseteljük a spawner állapotát
+}
 
-    public void UnscheduleBoss1Spawner()
+    /*public void UnscheduleBoss1Spawner()
     {
         hasSpawned = true; // Eltávolítjuk a spawner-t
     }*/

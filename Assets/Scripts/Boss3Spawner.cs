@@ -56,6 +56,10 @@ public class Boss3SpawnerGO : MonoBehaviour
         return topLeft;
     }
 
+ public void ScheduleBoss3Spawner()
+{
+    hasSpawned = false; // Reseteljük a spawner állapotát
+}
    /* public void UnscheduleBoss3Spawner()
     {
         hasSpawned = true; // Eltávolítjuk a spawner-t
