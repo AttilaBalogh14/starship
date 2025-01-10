@@ -1,1 +1,11 @@
-# starship
+# A galaktikus kaland
+
+A játék futattása után egy főmenübe kerülünk, ahol 3 lehetőség tárul elénk. Elindíthatjuk a játékot a play gombra kattintva vagy kiléphetünk a quit gombra nyomva, illetve lehetőségünk van a játék alatt hallatszódó zenét ki- és bekapcsolni. 
+A play gomb megnyomása után a játékos az első szintre kerül, ahol előszőr bemutatásra kerül a szint története és itt lehetőségünk lesz kilépni a játékból vagy a play gombra kattintva elindítani a szintet.
+Itt a játékosunkat a W A S D vagy a nyilak segítségével mozgathatjuk, valamint a space billentyű lenyomásával tudunk lőni.
+A képernyőn látható az eltelt idő, a játékos által elért pont, a játékos életeinek a száma, illetve egy pause gomb, aminek segítségével megállíthatjuk a játékot amennyiben azt szeretnénk.
+A pause gomb megnyomása után az átváltozik egy másik gombbá, amit ha megnyomunk, akkor folytatódik a játék. Ez a funkció elérhatő egyébként az esc billentyű lenyomásával is. A játék szünetetltetése alatt megjelenik egy új gomb is amire ha rányomunk, akkor a main menu-be tudunk visszatérni.
+A játék során ellenséges űrhajók érkeznek és tüzelnek a játékosunkra, valamint asteroidák is nehezítik a játékos dolgát. A feladat, minél több ellenséges űrhajó kilövése, amiért cserébe pontokat kapunk és egy bizonyos pontszám elérése után minden szinten megjelenik a boss.
+A boss legyőzése után az első és a második szinten megjelenik egy portál, amibe ha játékos belemegy, akkor átkerül a következő szintre. A harmadik és egyben utolsó szinten a boss legyőzése után már nem jelenik meg portál, itt lehetőség van az egyre nehezedő körülmények mellett addig játszani, amíg el nem fogynak a játékos életei.
+A játék során 3 különleges képesség is segíti a játékost. A shield objektum felvétele után egy pajzs kerül a játékosra egy bizonyos ideig, ami alatt nem tudja altalálni semmi a játékosunkat. A plussz élet objektum felvétele után értelem szerűen egyel nő a játékos életeinek a száma. Ez akkor jelenik, meg ha a játékos életeinek a száma 1-re csökken vagy ha egy bizonyos idő leteltével nem kellett a játékosnak életet felvennie. Az extra lövés képesség felvétele után a játékosunk 2 lézernyaláb helyett 4 kilövésére lesz képes egy bizonyos ideig.
+Ha a játékos életei elfogynak, akkor vége a játéknak, azonban az adott szinttől lesz lehetőség újra kezdeni.
