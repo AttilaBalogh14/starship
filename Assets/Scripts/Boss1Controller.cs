@@ -5,9 +5,7 @@ using UnityEngine;
 public class Boss1Controller : MonoBehaviour
 {
     public float speed = 0f;                   // Főgonosz sebessége
-    public int Lives = 12;                    // Boss1 élete
-    public GameObject bulletPrefab;           // Lövedék prefabja
-    public Transform bulletSpawnPoint;        // Lövedék kilövési pozíciója
+    public int Lives = 26;                    // Boss1 élete
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     public bool movingRight = true;          // Kezdeti mozgásirány jobbra
