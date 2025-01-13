@@ -7,8 +7,8 @@ public class Boss : MonoBehaviour
     public GameObject bulletPrefab; // A lövedék prefab
     public Transform firePointLeft;  // A bal oldali lövési pont
     public Transform firePointRight; // A jobb oldali lövési pont
-    float fireRate = 4f;    // Lövési sebesség (másodpercben)
-    float nextFireTime = 4f; // Következő lövés ideje
+    float fireRate = 3f;    // Lövési sebesség (másodpercben)
+    float nextFireTime = 3f; // Következő lövés ideje
 
     private Transform player; // A játékos pozíciója
 

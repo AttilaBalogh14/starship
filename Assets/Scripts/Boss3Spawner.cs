@@ -22,6 +22,11 @@ public class Boss3SpawnerGO : MonoBehaviour
             Debug.LogError("GameScore script not found in the scene!");
         }
 
+        if (gameScore.Score!=0)
+        {
+            spawnScore=spawnScore+gameScore.Score;
+        }
+
         
         InvokeRepeating("CheckScoreAndSpawnBoss3", 1f, 1f); // Ellenőrzés 1 másodpercenként
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Boss3Controller : MonoBehaviour
 {
     private float speed = 10f;                   // Főgonosz sebessége
-    private int Lives = 100;                    // Boss3 élete
+    private int Lives = 120;                    // Boss3 élete
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
