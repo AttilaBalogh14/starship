@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject ShieldOnPlayer;
     
     private float savedTimeElapsed;
-    private float shieldduration = 15f;
+    private float shieldduration = 10f;
     private float shieldtimer;
     public int levelNumber;
     public bool isShieldActive = false;  // Külön változó a pajzs aktív állapotához

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Boss3Controller : MonoBehaviour
 {
     private float speed = 10f;                   // Főgonosz sebessége
-    private int Lives = 120;                    // Boss3 élete
+    private int Lives = 330;                    // Boss3 élete
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
@@ -39,11 +39,11 @@ public class Boss3Controller : MonoBehaviour
         else
         {
             Move();
-            /*if (Random.Range(0f, 1f) < 0.015f) // ~% esély frame-enként
+            if (Random.Range(0f, 1f) < 0.001f) // ~% esély frame-enként
             {
                 isPaused = true;
                 pauseTimer = Random.Range(0.2f, 0.5f); // Véletlen szünet 1-2 másodperc
-            }*/
+            }
 
             // Véletlenszerű gyors mozgás előre és vissza
             if (Time.time>=nextDashTime) // ~% esély frame-enként
@@ -125,7 +125,7 @@ public class Boss3Controller : MonoBehaviour
         transform.position = new Vector2(transform.position.y, -1f);
 
         // Kis várakozás, majd vissza az eredeti pozícióra
-        Invoke(nameof(ReturnToOriginalPosition), 0.2f); // 1 másodperc várakozás
+        Invoke(nameof(ReturnToOriginalPosition), 1f); // 1 másodperc várakozás
     }
 
     void ReturnToOriginalPosition()
