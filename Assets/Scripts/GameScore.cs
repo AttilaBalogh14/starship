@@ -11,6 +11,8 @@ public class GameScore : MonoBehaviour
 
     int score = 0;
 
+    public int prevlevelscore;
+
     public int Score
     {
         get
@@ -56,6 +58,7 @@ public class GameScore : MonoBehaviour
     public void SaveScore()
     {
         PlayerPrefs.SetInt("SavedScore", score);  // Mentés
+        prevlevelscore=score;
     }
 
     public void LoadScore()

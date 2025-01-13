@@ -154,6 +154,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SceneController.GetCurrentSceneName()=="level 1")
+        {
+            ClearSavedData();
+        }
         GMState = GameManagerState.Opening;
 
         // Ensure music states are correct at start
@@ -200,11 +204,12 @@ public class GameManager : MonoBehaviour
         // Egyéb logikák a játék vége után (pl. játékos elpusztulása, UI frissítése)
 
         // Nullázzuk a pontszámot és az időt a játék végén
-        GameScore.Instance.ResetScore();
-        TimeCounter.Instance.ResetTime(); 
+        //GameScore.Instance.ResetScore();
+        //TimeCounter.Instance.ResetTime(); 
+        TimeCounter.Instance.ellapsedTime= TimeCounter.Instance.prevleveltime;
 
         // Töröljük a mentett adatokat, amikor a játékos meghal
-        ClearSavedData();
+        //ClearSavedData();
 
 
     }
@@ -471,10 +476,11 @@ public class GameManager : MonoBehaviour
         playerShip.GetComponent<PlayerControl>().ResetVisibility();  // Biztosítjuk, hogy a hajó látható legyen
 
         // Betöltjük a szint leírását újra
-        LoadLevelDescriptions();  
+        LoadLevelDescriptions(); 
+        GameScore.Instance.LoadScore(); 
 
         // Töröljük a mentett adatokat új játék kezdésekor
-        ClearSavedData();
+        //ClearSavedData();
 
         
     }

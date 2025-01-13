@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Boss1Controller : MonoBehaviour
 {
     public float speed = 2f;                   // Főgonosz sebessége
-    [SerializeField] float Lives, MaxLives = 100;                    // Boss1 élete
+    float Lives, MaxLives = 100;                    // Boss1 élete 100
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     public bool movingRight = true;          // Kezdeti mozgásirány jobbra
