@@ -5,7 +5,7 @@ using UnityEngine;
 public class Boss2Controller : MonoBehaviour
 {
     private float speed = 6f;                   // Főgonosz sebessége
-    private int Lives = 200;                    // Boss2 élete
+    [SerializeField] public float Lives, MaxLives = 200;                    // Boss2 élete
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
@@ -15,6 +15,17 @@ public class Boss2Controller : MonoBehaviour
     public delegate void Boss2DestroyedEvent();
     public static event Boss2DestroyedEvent OnBoss2Destroyed;
 
+    public HealthBar healthBar;
+
+    private void Awake()
+    {
+        // Automatikus keresés, ha nincs explicit hozzárendelve
+        if (healthBar == null)
+        {
+            healthBar = GetComponentInChildren<HealthBar>();
+        }
+    }
+
     void Start()
     {
         // Kezdetben véletlenszerűen állítja be az irányt
@@ -22,6 +33,12 @@ public class Boss2Controller : MonoBehaviour
 
         // Megkeressük a pontszámkezelő UI-t 
         scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+
+        Lives = MaxLives;
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar(Lives, MaxLives);
+        }
     }
 
     void Update()
@@ -76,6 +93,12 @@ public class Boss2Controller : MonoBehaviour
         {
             // Csökkentjük a boss életét
             Lives--;
+
+            
+            if (healthBar != null)
+            {
+                healthBar.UpdateHealthBar(Lives, MaxLives);
+            }
             
             PlayExplosion();
 

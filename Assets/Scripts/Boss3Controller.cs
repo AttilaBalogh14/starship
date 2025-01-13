@@ -5,7 +5,7 @@ using UnityEngine;
 public class Boss3Controller : MonoBehaviour
 {
     private float speed = 10f;                   // Főgonosz sebessége
-    private int Lives = 330;                    // Boss3 élete
+    [SerializeField] float Lives, MaxLives = 330;                    // Boss3 élete
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
@@ -14,6 +14,8 @@ public class Boss3Controller : MonoBehaviour
     private float nextDashTime;
     public GameObject ExplosionGO;            //explosion prefab
     Vector3 originalPosition;                 // Eredeti pozíció mentése
+
+    public HealthBar healthBar;
 
     void Start()
     {
@@ -24,6 +26,12 @@ public class Boss3Controller : MonoBehaviour
         scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
 
         SetNextDashTime();
+
+        Lives = MaxLives;
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar(Lives, MaxLives);
+        }
     }
 
     void Update()
@@ -86,6 +94,11 @@ public class Boss3Controller : MonoBehaviour
         {
             // Csökkentjük a boss életét
             Lives--;
+
+            if (healthBar != null)
+            {
+                healthBar.UpdateHealthBar(Lives, MaxLives);
+            }
             
             PlayExplosion();
 
