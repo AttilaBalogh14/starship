@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss1Controller : MonoBehaviour
 {
-    public float speed = 0f;                   // Főgonosz sebessége
-    public int Lives = 12;                    // Boss1 élete
-    public GameObject bulletPrefab;           // Lövedék prefabja
-    public Transform bulletSpawnPoint;        // Lövedék kilövési pozíciója
+    public float speed = 2f;                   // Főgonosz sebessége
+    float Lives, MaxLives = 100;                    // Boss1 élete 100
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     public bool movingRight = true;          // Kezdeti mozgásirány jobbra
     public GameObject ExplosionGO;            //explosion prefab
     public delegate void Boss1DestroyedEvent();
     public static event Boss1DestroyedEvent OnBoss1Destroyed;
+
+    public HealthBar healthBar;
+
+    private void Awake()
+    {
+        // Automatikus keresés, ha nincs explicit hozzárendelve
+        if (healthBar == null)
+        {
+            healthBar = GetComponentInChildren<HealthBar>();
+        }
+    }
 
     void Start()
     {
@@ -22,6 +32,13 @@ public class Boss1Controller : MonoBehaviour
 
         // Megkeressük a pontszámkezelő UI-t 
         scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+
+        Lives = MaxLives;
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar(Lives, MaxLives);
+        }
+
     }
 
     void Update()
@@ -60,6 +77,14 @@ public class Boss1Controller : MonoBehaviour
         {
             // Csökkentjük a boss életét
             Lives--;
+
+            //healthBar.GetComponent<HealthBar>().UpdateHealthBar(Lives, MaxLives);
+
+             if (healthBar != null)
+            {
+                healthBar.UpdateHealthBar(Lives, MaxLives);
+            }
+
             
             PlayExplosion();
 

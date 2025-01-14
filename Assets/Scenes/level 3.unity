@@ -3463,7 +3463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss3GO: {fileID: 2450463086247479440, guid: 150843936f5273f479350ce48f06829d, type: 3}
-  spawnScore: 11000
+  spawnScore: 100
 --- !u!4 &1388182876
 Transform:
   m_ObjectHideFlags: 0

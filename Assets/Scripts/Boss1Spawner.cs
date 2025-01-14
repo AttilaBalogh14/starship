@@ -23,6 +23,11 @@ public class Boss1SpawnerGO : MonoBehaviour
             Debug.LogError("GameScore script not found in the scene!");
         }
 
+        if (gameScore.Score!=0)
+        {
+            spawnScore=spawnScore+gameScore.Score;
+        }
+
         
         InvokeRepeating("CheckScoreAndSpawnBoss1", 1f, 1f); // Ellenőrzés 1 másodpercenként
     }
@@ -63,13 +68,12 @@ public bool HasSpawned()
     return hasSpawned;
 }
 
-   /*public void ScheduleBoss1Spawner()
-    {
-        //spawnScore = newSpawnScore; // Új spawn pontszám beállítása
-        hasSpawned = false;         // Visszaállítjuk, hogy újra spawnolható legyen
-    }
+   public void ScheduleBoss1Spawner()
+{
+    hasSpawned = false; // Reseteljük a spawner állapotát
+}
 
-    public void UnscheduleBoss1Spawner()
+    /*public void UnscheduleBoss1Spawner()
     {
         hasSpawned = true; // Eltávolítjuk a spawner-t
     }*/

@@ -3855,7 +3855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss2GO: {fileID: 7250957786839938043, guid: d70b9555806f4a94cad3808fc99b7b71, type: 3}
-  spawnScore: 5000
+  spawnScore: 100
 --- !u!4 &1515389265
 Transform:
   m_ObjectHideFlags: 0

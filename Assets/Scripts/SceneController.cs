@@ -27,5 +27,8 @@ public class SceneController : MonoBehaviour {
         LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    
+    public static string GetCurrentSceneName()
+    {
+        return (string) SceneManager.GetActiveScene().name;
+    }
 }

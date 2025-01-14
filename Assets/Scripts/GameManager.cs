@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject ShieldOnPlayer;
     
     private float savedTimeElapsed;
-    private float shieldduration = 15f;
+    private float shieldduration = 10f;
     private float shieldtimer;
     public int levelNumber;
     public bool isShieldActive = false;  // Külön változó a pajzs aktív állapotához
@@ -158,6 +158,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SceneController.GetCurrentSceneName()=="level 1")
+        {
+            ClearSavedData();
+        }
         GMState = GameManagerState.Opening;
 
         // Ensure music states are correct at start
@@ -204,11 +208,12 @@ public class GameManager : MonoBehaviour
         // Egyéb logikák a játék vége után (pl. játékos elpusztulása, UI frissítése)
 
         // Nullázzuk a pontszámot és az időt a játék végén
-        GameScore.Instance.ResetScore();
-        TimeCounter.Instance.ResetTime(); 
+        //GameScore.Instance.ResetScore();
+        //TimeCounter.Instance.ResetTime(); 
+        TimeCounter.Instance.ellapsedTime= TimeCounter.Instance.prevleveltime;
 
         // Töröljük a mentett adatokat, amikor a játékos meghal
-        ClearSavedData();
+        //ClearSavedData();
 
         continueButton.SetActive(false);
         pauseButton.SetActive(false);
@@ -324,7 +329,13 @@ public class GameManager : MonoBehaviour
             asteroidSpawner.GetComponent<AsteroidSpawner>().ScheduleAsteroidSpawner();  
             
             //start boss1 spawner
-            //Boss1SpawnerGO.GetComponent<Boss1SpawnerGO>().ScheduleBoss1Spawner();
+            Boss1SpawnerGO.GetComponent<Boss1SpawnerGO>().ScheduleBoss1Spawner();
+
+            //start boss2 spawner
+            Boss2SpawnerGO.GetComponent<Boss2SpawnerGO>().ScheduleBoss2Spawner();
+
+            //start boss3 spawner
+            Boss3SpawnerGO.GetComponent<Boss3SpawnerGO>().ScheduleBoss3Spawner();
 
             // Start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
@@ -478,10 +489,11 @@ public class GameManager : MonoBehaviour
         playerShip.GetComponent<PlayerControl>().ResetVisibility();  // Biztosítjuk, hogy a hajó látható legyen
 
         // Betöltjük a szint leírását újra
-        LoadLevelDescriptions();  
+        LoadLevelDescriptions(); 
+        GameScore.Instance.LoadScore(); 
 
         // Töröljük a mentett adatokat új játék kezdésekor
-        ClearSavedData();
+        //ClearSavedData();
 
         
     }
