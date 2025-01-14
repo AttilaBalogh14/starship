@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class Boss2Controller : MonoBehaviour
 {
-    public float speed = 0f;                   // Főgonosz sebessége
-    public int Lives = 20;                    // Boss2 élete
-    public GameObject bulletPrefab;           // Lövedék prefabja
-    public Transform bulletSpawnPoint;        // Lövedék kilövési pozíciója
+    private float speed = 6f;                   // Főgonosz sebessége
+    float Lives, MaxLives = 200;                    // Boss2 élete 200
     public Transform player;                  // Játékos pozíciója
     GameObject scoreUITextGO;                 // Pontszám UI
     private bool movingRight = true;          // Kezdeti mozgásirány jobbra
+    private bool isPaused = false; // Megállt-e a boss jelenleg
+    private float pauseTimer = 0f; // Szünet számláló
     public GameObject ExplosionGO;            //explosion prefab
     public delegate void Boss2DestroyedEvent();
     public static event Boss2DestroyedEvent OnBoss2Destroyed;
+
+    public HealthBar healthBar;
+
+    private void Awake()
+    {
+        // Automatikus keresés, ha nincs explicit hozzárendelve
+        if (healthBar == null)
+        {
+            healthBar = GetComponentInChildren<HealthBar>();
+        }
+    }
 
     void Start()
     {
@@ -22,12 +33,33 @@ public class Boss2Controller : MonoBehaviour
 
         // Megkeressük a pontszámkezelő UI-t 
         scoreUITextGO = GameObject.FindGameObjectWithTag("ScoreTextTag");
+
+        Lives = MaxLives;
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar(Lives, MaxLives);
+        }
     }
 
     void Update()
     {
-        Move();
-        
+        if (isPaused)
+        {
+            pauseTimer -= Time.deltaTime;
+            if (pauseTimer <= 0)
+            {
+                isPaused = false; // Szünet vége
+            }
+        }
+        else
+        {
+            Move();
+            if (Random.Range(0f, 1f) < 0.01f) // ~% esély frame-enként
+            {
+                isPaused = true;
+                pauseTimer = Random.Range(0.2f, 0.5f); // Véletlen szünet 1-2 másodperc
+            }
+        }
     }
 
     // Főgonosz jobbra-balra mozgatása
@@ -56,11 +88,17 @@ public class Boss2Controller : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        // Érzékeli, ha a játékos lövedékei vagy hajója eltalálja a boss1-et
+        // Érzékeli, ha a játékos lövedékei vagy hajója eltalálja a boss2-et
         if (col.CompareTag("PlayerBulletTag01") || col.CompareTag("PlayerBulletTag02") || col.CompareTag("PlayerShipTag"))
         {
             // Csökkentjük a boss életét
             Lives--;
+
+            
+            if (healthBar != null)
+            {
+                healthBar.UpdateHealthBar(Lives, MaxLives);
+            }
             
             PlayExplosion();
 

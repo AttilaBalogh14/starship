@@ -13,6 +13,8 @@ public class TimeCounter : MonoBehaviour
     public float ellapsedTime; //the ellapsed time after the user clicks on play
     bool startCounter; //flag to start the counter
 
+    public float prevleveltime;
+
     int minutes;
     int seconds;
 
@@ -74,6 +76,7 @@ public class TimeCounter : MonoBehaviour
     public void SaveTime()
     {
         PlayerPrefs.SetFloat("SavedTime", ellapsedTime);  // Mentés
+        prevleveltime=ellapsedTime;
     }
 
     public void LoadTime()
