@@ -1700,6 +1700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreTextUI: {fileID: 663393090}
+  prevlevelscore: 0
 --- !u!114 &663393090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2837,6 +2838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeUI: {fileID: 1192227623}
   ellapsedTime: 0
+  prevleveltime: 0
   savedTime: 0
 --- !u!114 &1192227623
 MonoBehaviour:
@@ -4728,7 +4730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss1GO: {fileID: 5088480864357973031, guid: 444ba6c2d6d74504cb541cb720a1bad0, type: 3}
-  spawnScore: 100
+  spawnScore: 1500
 --- !u!4 &1973956844
 Transform:
   m_ObjectHideFlags: 0
