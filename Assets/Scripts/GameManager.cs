@@ -337,6 +337,10 @@ public class GameManager : MonoBehaviour
             //start boss3 spawner
             Boss3SpawnerGO.GetComponent<Boss3SpawnerGO>().ScheduleBoss3Spawner();
 
+            FinishPoint1SpawnerGO.GetComponent<FinishPoint1SpawnerGO>().ScheduleFinishPoint1Spawner();
+
+            FinishPoint2SpawnerGO.GetComponent<FinishPoint2SpawnerGO>().ScheduleFinishPoint2Spawner();
+
             // Start the time counter
             TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
 

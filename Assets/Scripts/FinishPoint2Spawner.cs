@@ -37,4 +37,10 @@ public class FinishPoint2SpawnerGO : MonoBehaviour
     }
 }
 
+
+   public void ScheduleFinishPoint2Spawner()
+{
+    finishPointSpawned = false; // Reseteljük a spawner állapotát
+}
+
 }
